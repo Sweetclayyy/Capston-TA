@@ -13,10 +13,11 @@ class NavbarComponent extends HTMLElement {
       <div class="layout">
         <aside class="sidebar">
           <div class="nav-menu">
-            <div class="nav-item" data-route="/dashboard">📊 Dasbor</div>
-            <div class="nav-item" data-route="/sewa">📁 Sewa</div>
-            <div class="nav-item" data-route="/stok">📦 Stok</div>
-            <div class="nav-item" data-route="/laporanKeuangan">📈 Laporan</div>
+            <div class="nav-item" data-route="/dashboard"> Dasbor</div>
+            <div class="nav-item" data-route="/sewa"> Sewa</div>
+            <div class="nav-item" data-route="/stok"> Stok</div>
+            <div class="nav-item" data-route="/laporanKeuangan"> Laporan</div>
+            <button class="logout-btn-blue" data-route="/logout"> Logout</button>
           </div>
         </aside>
 
@@ -26,10 +27,6 @@ class NavbarComponent extends HTMLElement {
             <button class="logout-btn" data-route="/logout">🚪 Logout</button>
           </header>
 
-          <div class="content fade" id="page-content">
-            <h2>Selamat datang di halaman Dasbor 🎉</h2>
-            <p>Ini adalah area konten utama untuk halaman yang dipilih.</p>
-          </div>
         </main>
       </div>
     `;
