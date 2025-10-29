@@ -1,0 +1,144 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9fafb;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #1E3AFA;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  color: white;
+  padding: 20px 0;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.nav-item {
+  padding: 12px 25px;
+  border-radius: 30px 0 0 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-item.active {
+  background-color: white;
+  color: #1E3AFA;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logout-btn {
+  color: rgb(239, 12, 12);
+  text-align: left;
+  padding: 12px 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Navbar atas */
+.topbar {
+  background: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.topbar h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.topbar .logout {
+  color: #ff4444;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Konten */
+.content {
+  flex: 1;
+  padding: 30px;
+  color: #333;
+}
+
+.fade {
+  transition: opacity 0.4s ease;
+  opacity: 1;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafb;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #1E3AFA;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  color: white;
+  padding: 20px 0;
+}
+
+/* Bagian utama */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Tambahkan ini biar full width */
+  overflow: hidden; /* biar tidak ada scroll horizontal */
+}
+
+/* Navbar atas */
+.topbar {
+  background: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+  width: 100%; /* Pastikan penuh */
+  box-sizing: border-box;
+}
+
+/* Konten */
+.content {
+  flex: 1;
+  padding: 30px;
+  color: #333;
+}
+
