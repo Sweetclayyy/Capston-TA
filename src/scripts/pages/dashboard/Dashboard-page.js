@@ -1,3 +1,5 @@
+import "../../components/Navbar.js";
+
 export default class Dashboard {
   constructor() {
   }
@@ -5,7 +7,7 @@ export default class Dashboard {
   async render() {
     return `
       <section class="container">
-        <h1>Dashboard</h1>
+        <navbar-component></navbar-component>
       </section>
     `;
   }
