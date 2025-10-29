@@ -1,3 +1,4 @@
+import "../../components/Navbar.js";
 export default class SewaPage {
   constructor() {
   }
@@ -5,7 +6,7 @@ export default class SewaPage {
   async render() {
     return `
       <section class="container">
-        <h1>Sewa Page</h1>
+        <navbar-component></navbar-component>
       </section>
     `;
   }

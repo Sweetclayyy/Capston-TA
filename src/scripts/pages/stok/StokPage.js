@@ -1,8 +1,9 @@
+import "../../components/Navbar.js";
 export default class StokPage {
   async render() {
     return `
       <section class="container">
-        <h1>Stok</h1>
+      <navbar-component></navbar-component>
       </section>
     `;
   }

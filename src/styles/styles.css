@@ -1,8 +1,7 @@
 @import "base.css";
 
-@import "navigation-bar.css";
-@import "navbar.css";
 @import "navigation-component.css";
+@import "navigation-bar.css";
 @import "services.css";
 @import "footer.css";
 @import "logout.css";

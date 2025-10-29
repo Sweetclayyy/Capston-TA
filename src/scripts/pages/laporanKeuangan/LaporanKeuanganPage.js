@@ -1,3 +1,4 @@
+import "../../components/Navbar.js";
 export default class LaporanPage {
   constructor() {
   }
@@ -5,7 +6,7 @@ export default class LaporanPage {
   async render() {
     return `
       <section class="container">
-        <h1>Laporan Keuangan</h1>
+        <navbar-component></navbar-component>
       </section>
     `;
   }
