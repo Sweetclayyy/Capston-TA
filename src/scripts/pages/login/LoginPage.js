@@ -3,10 +3,12 @@ export default class Login {
     return `
       <section class="login-container">
         <div class="login-left">
+        <div class="left-group">
           <h2>Hello, <br><span>Welcome!</span></h2>
           <p>Selamat datang di aplikasi pencatatan keuangan Bara Architect Entertainment!</p>
-          <p>Anda perlu login untuk melanjutkan</p>
+          <p id="login-info">Anda perlu login untuk melanjutkan</p>
           <button class="btn-outline">Login</button>
+          </div>
         </div>
 
         <div class="login-right">
