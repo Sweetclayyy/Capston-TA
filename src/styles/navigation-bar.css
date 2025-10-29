@@ -43,6 +43,16 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+.logout-btn-blue {
+  color: rgb(255, 255, 255);
+  text-align: left;
+  padding: 12px 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
 .logout-btn {
   color: rgb(239, 12, 12);
   text-align: left;
