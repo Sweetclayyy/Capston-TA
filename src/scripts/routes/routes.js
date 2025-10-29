@@ -1,32 +1,25 @@
 import Login from "../pages/login/LoginPage.js";
 import LandingPresenter from "../pages/landing-page/LandingPage-Presenter.js";
 import Logout from "../pages/logout/LogoutPage.js";
-import HomePage from "../pages/home/home-page.js";
-import LearningPage from "../pages/learning/LearningPage.js";
-import ChatbotPage from "../pages/chatbot/ChatBotPage.js";
-import CommunityPage from "../pages/comunity/ComunityPage.js";
-import CommunityPagePresenter from "../pages/comunity/ComunityPage-Presenter.js";
-import Register from "../pages/register/RegisterPage.js";
-import SetupPageStart from "../pages/setup/SetupPage-Start.js";
+import Dashboard from "../pages/dashboard/Dashboard-page.js";
+import LaporanPage from "../pages/laporanKeuangan/LaporanKeuanganPage.js";
+import StokPage from "../pages/stok/StokPage.js";
 import ProfilePage from "../pages/profile/profile-page.js";
-import DiagnosePage from "../pages/diagnose/DiagnosePage.js";
-import DiagnoseForm from "../pages/diagnose/DiagnoseForm.js";
+import SewaPage from "../pages/penyewaan/SewaPage.js";
+import SewaForm from "../pages/penyewaan/SewaForm.js";
+
 
 const getRoutes = (mainContent) => {
   return {
     "/login": new Login(),
     "/landing": new LandingPresenter(mainContent),
-    "/home": new HomePage(),
+    "/dashboard": new Dashboard(),
     "/logout": new Logout(),
-    "/learning": new LearningPage(),
-    "/chatbot": new ChatbotPage(),
-    "/community": new CommunityPage(),
-    "/register": new Register(),
-    "/setup": new SetupPageStart(),
+    "/laporanKeuangan": new LaporanPage(),
+    "/stok": new StokPage(),
     "/profile": new ProfilePage(),
-    "/form": new CommunityPagePresenter(),
-    "/diagnosis": new DiagnosePage(),
-    "/diagnosisForm": new DiagnoseForm(),
+    "/sewa": new SewaPage(),
+    "/sewaForm": new SewaForm(),
 
     "/": {
       render: () => {

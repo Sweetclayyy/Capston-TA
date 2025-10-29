@@ -3,7 +3,7 @@ import authService from "../data/auth-service.js";
 class RouteGuard {
   static requiresAuth(path) {
     const protectedRoutes = [
-      "/home",
+      //"/dashboard",
       "/learning",
       "/chatbot",
       "/community",
