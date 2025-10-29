@@ -9,20 +9,33 @@
 
 .login-left {
   flex: 1;
-  background: linear-gradient(135deg, #005eff, #6d9bff);
+  background: url("../public/images/Login-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   padding: 3rem;
+  max-width: 45%;
 }
 
 .login-left h2 {
-  font-size: 2rem;
+  font-size: 2.3rem;
+  padding-bottom: 1rem;
 }
 
+#login-info {
+  padding-top: 3rem;
+}
+
+.left-group{
+  align-items: center;
+  margin: 7rem;
+  
+}
 .login-left span {
   font-weight: bold;
 }
@@ -32,10 +45,12 @@
   background: transparent;
   border: 2px solid white;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 40px;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 1rem;
+  
 }
 
 .btn-outline:hover {
@@ -117,5 +132,6 @@
   cursor: pointer;
   transition: 0.3s;
   align-self: center; 
+  font-size: 1rem;
 }
 
