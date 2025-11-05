@@ -1,21 +1,24 @@
+/* === Layout Utama === */
 .layout {
   display: flex;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
   background-color: #f9fafb;
+  overflow: hidden; /* cegah scroll di layout utama */
 }
 
-/* Sidebar */
+/* === Sidebar === */
 .sidebar {
   background-color: #1E3AFA;
   width: 230px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-top-right-radius: 0px!important;
-  border-bottom-right-radius: 0px!important;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
   color: white;
   padding: 20px 0;
+  flex-shrink: 0;
 }
 
 .nav-menu {
@@ -30,7 +33,7 @@
 }
 
 .nav-item {
-    display: flex;
+  display: flex;
   align-items: center;
   padding: 12px 25px;
   border-radius: 30px 0 0 30px;
@@ -49,16 +52,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.logout-btn-blue {
-  color: rgb(255, 255, 255);
-  text-align: left;
-  padding: 12px 25px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
 .logout-btn {
   color: rgb(239, 12, 12);
   text-align: left;
@@ -73,7 +66,17 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Navbar atas */
+/* === Area Utama (Konten + Topbar) === */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* agar yang scroll hanya #main-content */
+}
+
+/* === Topbar === */
 .topbar {
   background: white;
   height: 60px;
@@ -83,6 +86,11 @@
   padding: 0 40px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .topbar h1 {
@@ -91,70 +99,32 @@
   color: #333;
 }
 
-.topbar .logout {
-  color: #ff4444;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-/* Konten */
-.content {
+/* === Konten yang Bisa Scroll === */
+#main-content {
   flex: 1;
+  overflow-y: auto; /* ✅ scroll vertikal aktif */
   padding: 30px;
   color: #333;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
+/* Scrollbar Halus */
+#main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#main-content::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 8px;
+}
+
+#main-content::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* === Transisi Halus === */
 .fade {
   transition: opacity 0.4s ease;
   opacity: 1;
 }
-
-.layout {
-  display: flex;
-  height: 100vh;
-  background-color: #f9fafb;
-}
-
-/* Sidebar */
-.sidebar {
-  background-color: #1E3AFA;
-  width: 230px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  color: white;
-  padding: 20px 0;
-}
-
-/* Bagian utama */
-.main-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* Tambahkan ini biar full width */
-  overflow: hidden; /* biar tidak ada scroll horizontal */
-}
-
-/* Navbar atas */
-.topbar {
-  background: white;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  border-bottom: 1px solid #e5e7eb;
-  flex-shrink: 0;
-  width: 100%; /* Pastikan penuh */
-  box-sizing: border-box;
-}
-
-/* Konten */
-.content {
-  flex: 1;
-  padding: 30px;
-  color: #333;
-}
-

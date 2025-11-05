@@ -6,7 +6,7 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-yadaYada..."
+      integrity="sha512-..."
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
@@ -15,8 +15,13 @@
     <title>AgriEdu</title>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- Navbar tetap di sini, tidak dibuat via JS -->
+    <navbar-component></navbar-component>
+
+    <!-- Hanya ini yang berubah saat navigasi -->
     <div id="main-content"></div>
+
+    <!-- Drawer (opsional, untuk mobile) -->
     <button
       id="drawer-button"
       aria-label="Navigation Menu"
@@ -25,6 +30,9 @@
       ☰
     </button>
     <nav id="navigation-drawer" style="display: none"></nav>
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module" src="./router.js"></script>
   </body>
 </html>
