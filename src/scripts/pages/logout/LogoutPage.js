@@ -24,13 +24,13 @@ export default class Logout {
       console.log("Logout successful, redirecting...");
 
       setTimeout(() => {
-        window.location.hash = "#/landing";
+        window.location.hash = "#/login";
       }, 2000);
     } catch (error) {
       console.error("Logout error:", error);
 
       setTimeout(() => {
-        window.location.hash = "#/landing";
+        window.location.hash = "#/login";
       }, 2000);
     }
   }
