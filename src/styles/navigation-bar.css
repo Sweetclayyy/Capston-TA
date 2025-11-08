@@ -1,11 +1,13 @@
+/* === Layout Utama === */
 .layout {
   display: flex;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
   background-color: #f9fafb;
+  overflow: hidden; /* cegah scroll di layout utama */
 }
 
-/* Sidebar */
+/* === Sidebar === */
 .sidebar {
   background-color: #1E3AFA;
   width: 14.375rem; /* 230px */
@@ -29,6 +31,7 @@
 }
 
 .nav-item {
+  display: flex;
   display: flex;
   align-items: center;
   padding: 0.75rem 0.75rem; /* 12px 25px */
@@ -113,17 +116,27 @@
   color: #333;
 }
 
-.topbar .logout {
-  color: #ff4444;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-/* Konten */
-.content {
+/* === Konten yang Bisa Scroll === */
+#main-content {
   flex: 1;
   padding: 1.875rem; /* 30px */
   color: #333;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Halus */
+#main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#main-content::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 8px;
+}
+
+#main-content::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 /* Animasi Fade */

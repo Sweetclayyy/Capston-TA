@@ -1,13 +1,15 @@
+// src/pages/login/LoginPage.js
+
 export default class Login {
   async render() {
     return `
       <section class="login-container">
         <div class="login-left">
-        <div class="left-group">
-          <h2>Hello, <br><span>Welcome!</span></h2>
-          <p>Selamat datang di aplikasi pencatatan keuangan Bara Architect Entertainment!</p>
-          <p id="login-info">Anda perlu login untuk melanjutkan</p>
-          <button class="btn-outline">Login</button>
+          <div class="left-group">
+            <h2>Hello, <br><span>Welcome!</span></h2>
+            <p>Selamat datang di aplikasi pencatatan keuangan Bara Architect Entertainment!</p>
+            <p id="login-info">Anda perlu login untuk melanjutkan</p>
+            <button class="btn-outline">Login</button>
           </div>
         </div>
 
@@ -34,10 +36,17 @@ export default class Login {
   }
 
   async afterRender() {
+    await this._injectContent(); // ✅ Render dulu!
+
     const form = document.getElementById('loginForm');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
 
+    // ✅ Safety check
+    if (!form || !usernameInput || !passwordInput) {
+      console.error("❌ Elemen login form tidak ditemukan!");
+      return;
+    }
 
     function validateInput(input, message) {
       const errorMsg = input.nextElementSibling;
@@ -58,7 +67,6 @@ export default class Login {
       validateInput(passwordInput, 'Password tidak boleh kosong, harap isi password Anda!')
     );
 
-
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       validateInput(usernameInput, 'Username tidak boleh kosong, harap isi username Anda!');
@@ -66,8 +74,26 @@ export default class Login {
 
       const hasError = document.querySelectorAll('.error').length > 0;
       if (!hasError) {
-        console.log('Form valid! Proses login di sini...');
+        console.log('✅ Form valid! Proses login...');
+
+        // 💡 Contoh: setelah login sukses, redirect ke dashboard
+        window.location.hash = "#/dashboard";
+
+        // Atau jika ingin simpan session, bisa tambahkan logika di sini
       }
     });
+  }
+
+  // ✅ Method untuk inject konten ke #main-content
+  async _injectContent() {
+    const container = document.querySelector("#main-content");
+    if (!container) return console.error("❌ #main-content tidak ditemukan!");
+    container.innerHTML = await this.render();
+  }
+
+  // ✅ Unmount (jika perlu)
+  unmount() {
+    // Tidak ada listener khusus, tapi tetap definisikan untuk konsistensi
+    console.log("✅ Login page unmounted.");
   }
 }

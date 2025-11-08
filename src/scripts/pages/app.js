@@ -1,4 +1,4 @@
-import getRoutes from "../routes/routes.js";
+import { navigateTo } from "../routes/routes.js"; // ✅ Benar
 import Link from "../components/Link.js";
 import Router from "../routes/Router.js";
 import authService from "../data/auth-service.js";
@@ -68,45 +68,57 @@ class App {
     }
   }
 
-  async renderPage(pageInstance) {
-    if (this.content && pageInstance) {
-      try {
-        console.log("Rendering page instance:", pageInstance);
+ async renderPage(pageInstance) {
+  if (this.content && pageInstance) {
+    try {
+      console.log("Rendering page instance:", pageInstance);
 
-        const content = await pageInstance.render();
-        console.log(
-          "Rendered content:",
-          content ? "Content available" : "Content is undefined or empty"
-        );
+      const content = await pageInstance.render();
 
-        if (content) {
-          this.content.innerHTML = content;
+      if (content) {
+        // Render halaman (mungkin berisi navbar)
+        this.content.innerHTML = content;
 
-          if (pageInstance.afterRender) {
-            await pageInstance.afterRender();
-          }
+        // Cek apakah di dalam halaman ini ada <navbar-component>
+        const mainContentInsideNavbar = document.querySelector("navbar-component #main-content");
 
-          Link.updateLinks(this.content, this.router);
-
-          this.setupInPageNavigation();
-        } else {
-          console.error(
-            "Page render method returned undefined or empty content"
-          );
-          this.content.innerHTML =
-            '<div class="error-container"><h2>Error rendering page</h2><p>The page content could not be loaded.</p></div>';
+        // Kalau iya, arahkan this.content ke situ supaya router isi bagian ini saja ke depannya
+        if (mainContentInsideNavbar) {
+          this.content = mainContentInsideNavbar;
         }
-      } catch (error) {
-        console.error("Error rendering page:", error);
-        this.content.innerHTML = `<div class="error-container"><h2>Error rendering page</h2><p>${error.message}</p></div>`;
+
+        if (pageInstance.afterRender) {
+          await pageInstance.afterRender();
+        }
+
+        Link.updateLinks(this.content, this.router);
+        this.setupInPageNavigation();
+      } else {
+        console.error("Page render method returned undefined or empty content");
+        this.content.innerHTML = `
+          <div class="error-container">
+            <h2>Error rendering page</h2>
+            <p>The page content could not be loaded.</p>
+          </div>
+        `;
       }
-    } else {
-      console.error("Content element missing or invalid page instance", {
-        contentExists: !!this.content,
-        pageInstanceExists: !!pageInstance,
-      });
+    } catch (error) {
+      console.error("Error rendering page:", error);
+      this.content.innerHTML = `
+        <div class="error-container">
+          <h2>Error rendering page</h2>
+          <p>${error.message}</p>
+        </div>
+      `;
     }
+  } else {
+    console.error("Content element missing or invalid page instance", {
+      contentExists: !!this.content,
+      pageInstanceExists: !!pageInstance,
+    });
   }
+}
+
 
   setupInPageNavigation() {
     console.log("Setting up in-page navigation in App");

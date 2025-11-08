@@ -1,6 +1,5 @@
 class NavbarComponent extends HTMLElement {
   connectedCallback() {
-    // Muat CSS hanya sekali
     if (!document.querySelector('link[href$="navigation-bar.css"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
@@ -53,6 +52,13 @@ class NavbarComponent extends HTMLElement {
     const title = this.querySelector("#page-title");
 
     const updateTitle = (route) => {
+      if (!title) return;
+      let cleanTitle = route.replace("/", "");
+      cleanTitle = cleanTitle.replace(/([a-z])([A-Z])/g, "$1 $2");
+      cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
+      if (route === "/dashboard") cleanTitle = "Dashboard";
+      title.textContent = cleanTitle;
+    };
       if (!title) return;
       let cleanTitle = route.replace("/", "");
       cleanTitle = cleanTitle.replace(/([a-z])([A-Z])/g, "$1 $2");

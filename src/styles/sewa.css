@@ -1,0 +1,130 @@
+.sewa-container {
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9fafb; /* background halaman */
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-tambah {
+  background: none;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-tambah:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.tab-container {
+  display: flex;
+  border-radius: 2rem 2rem 0 0;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background-color: #f3f4f6;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.tab-btn.active {
+  background-color: #1E3AFA;
+  color: white;
+}
+
+.filter-wrap {
+  background-color: white;
+  padding: 16px 20px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-top: 10px;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  pointer-events: none;
+  font-size: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.sewa-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sewa-table th,
+.sewa-table td {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.sewa-table th {
+  background-color: #f9fafb;
+  font-weight: 500;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sewa-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.selesai {
+  background-color: #22c55e;
+}
+
+/* Untuk status "Belum Kembali" (jika perlu nanti) */
+.status.belum {
+  background-color: #ef4444;
+}
