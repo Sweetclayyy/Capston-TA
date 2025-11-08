@@ -1,17 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+/* ====== CONTAINER ====== */
 .login-container {
   display: flex;
   height: 100vh;
   background: #f8f9ff;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
+/* ====== LEFT SIDE ====== */
 .login-left {
   flex: 1;
-  background: url("../public/images/Login-bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  max-width: 45%;
+  background: url("../public/images/Login-bg.png") no-repeat center/cover;
   color: white;
   display: flex;
   flex-direction: column;
@@ -19,7 +20,6 @@
   align-items: flex-start;
   text-align: left;
   padding: 3rem;
-  max-width: 45%;
 }
 
 .login-left h2 {
@@ -27,17 +27,17 @@
   padding-bottom: 1rem;
 }
 
-#login-info {
-  padding-top: 3rem;
-}
-
-.left-group{
-  align-items: center;
-  margin: 7rem;
-  
-}
 .login-left span {
   font-weight: bold;
+}
+
+.left-group {
+  align-items: center;
+  margin: 7rem;
+}
+
+#login-info {
+  padding-top: 3rem;
 }
 
 .btn-outline {
@@ -50,15 +50,40 @@
   cursor: pointer;
   transition: 0.3s;
   font-size: 1rem;
-  
 }
 
 .btn-outline:hover {
   background: white;
-  color: #005eff!important;
+  color: #005eff !important;
 }
 
+/* ====== RIGHT SIDE ====== */
+.login-right {
+  flex: 1;
+  background: white;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.login-right h2 {
+  color: #005eff;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  font-size: 2.3rem;
+}
+
+#loginForm {
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ====== FORM ====== */
 .form-group {
   margin-bottom: 1.5rem;
   display: flex;
@@ -66,6 +91,14 @@
   width: 100%;
 }
 
+.form-group input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #c9d1ff;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s;
+}
 
 .form-group input:focus {
   border-color: #005eff;
@@ -82,48 +115,10 @@
   margin-top: 5px;
 }
 
-.btn-login:hover {
-  background: #0042c7;
-}
-
-.login-right {
-  flex: 1;
-  background: white;
-  padding: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* biar form di tengah */
-}
-
-.login-right h2 {
-  color: #005eff;
-  margin-bottom: 1rem;
-  padding-bottom: 2rem;
-  text-align: center;
-  font-size: 2.3rem;
-}
-
-#loginForm {
-  width: 100%;
-  max-width: 26rem; 
-  display: flex;
-  flex-direction: column;
-}
-
-
-.form-group input {
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid #c9d1ff;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
+/* ====== BUTTON ====== */
 .btn-login {
   width: 100%;
-  max-width: 26rem; 
+  max-width: 26rem;
   padding: 10px;
   background: #005eff;
   color: white;
@@ -131,7 +126,33 @@
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
-  align-self: center; 
+  align-self: center;
   font-size: 1rem;
 }
 
+.btn-login:hover {
+  background: #0042c7;
+}
+
+/* ====== LOGIN FULL PAGE MODE ====== */
+body.login-active .app-layout {
+  display: block !important;
+  min-height: 100vh;
+  background: linear-gradient(to right, #f8f9ff, #ffffff);
+  overflow: hidden;
+}
+
+body.login-active .main-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+body.login-active navbar-component,
+body.login-active header-component {
+  display: none !important;
+}
+
+body.login-active #main-content {
+  padding: 0;
+  margin: 0;
+}

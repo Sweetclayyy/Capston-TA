@@ -1,9 +1,7 @@
-// src/pages/login/LoginPage.js
-
 export default class Login {
   async render() {
     return `
-      <section class="login-container">
+      <section class="login-container fullpage">
         <div class="login-left">
           <div class="left-group">
             <h2>Hello, <br><span>Welcome!</span></h2>
@@ -36,13 +34,15 @@ export default class Login {
   }
 
   async afterRender() {
-    await this._injectContent(); // ✅ Render dulu!
+    await this._injectContent();
+
+    // Tambahkan class khusus biar layout berubah full screen
+    document.body.classList.add("login-active");
 
     const form = document.getElementById('loginForm');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
 
-    // ✅ Safety check
     if (!form || !usernameInput || !passwordInput) {
       console.error("❌ Elemen login form tidak ditemukan!");
       return;
@@ -76,24 +76,23 @@ export default class Login {
       if (!hasError) {
         console.log('✅ Form valid! Proses login...');
 
-        // 💡 Contoh: setelah login sukses, redirect ke dashboard
-        window.location.hash = "#/dashboard";
+        // Hapus tampilan login full
+        document.body.classList.remove("login-active");
 
-        // Atau jika ingin simpan session, bisa tambahkan logika di sini
+        // Redirect ke dashboard
+        window.location.hash = "#/dashboard";
       }
     });
   }
 
-  // ✅ Method untuk inject konten ke #main-content
   async _injectContent() {
     const container = document.querySelector("#main-content");
     if (!container) return console.error("❌ #main-content tidak ditemukan!");
     container.innerHTML = await this.render();
   }
 
-  // ✅ Unmount (jika perlu)
   unmount() {
-    // Tidak ada listener khusus, tapi tetap definisikan untuk konsistensi
     console.log("✅ Login page unmounted.");
+    document.body.classList.remove("login-active"); // pastikan layout balik normal
   }
 }

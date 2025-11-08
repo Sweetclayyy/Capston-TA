@@ -16,3 +16,23 @@ body {
   margin: 20px auto 5px auto;
   border: 1px solid #ccc;
 }
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+/* Konten utama di bawah header */
+#main-content {
+  flex: 1;
+  padding: 1.25rem;
+  margin-top: 4rem; /* kasih ruang sesuai tinggi header */
+  overflow-y: auto;
+  background-color:#f3f3ff !important;
+}
+
+
+

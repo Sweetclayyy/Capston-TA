@@ -1,16 +1,23 @@
-/* === Dashboard Layout === */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 .app-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f5fa;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f3ff;
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* === Konten utama === */
 .main-content-area {
   flex: 1;
-  padding: 1.25rem;
   overflow-y: auto;
+  margin-top: 4rem; /* perbaikan: hilangkan tanda seru salah */
 }
+
+.main-content-wrapper {
+  padding: 2rem; /* sesuaikan dengan yang kamu mau */
+  box-sizing: border-box; /* supaya padding tidak nambahin lebar */
+}
+
 
 /* === Quick Actions Row === */
 .quick-actions-row {
@@ -24,45 +31,53 @@
   padding: 1.25rem;
   border-radius: 0.75rem;
   color: white;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .quick-action-card:hover {
-  transform: translateY(-0.125rem);
-  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
 }
 
 .quick-action-card h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 0 0 0.625rem 0;
+  font-weight: normal;
 }
 
 .quick-action-card p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   opacity: 0.9;
   margin: 0 0 0.9375rem 0;
 }
 
+.quick-action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* default */
+}
+
+
 .see-more {
-  font-size: 0.85rem;
+  font-size: 1rem;
   text-decoration: none;
   color: inherit;
-  font-weight: bold;
   display: inline-block;
+  align-self: flex-end; /* pindah ke kanan */
+}
+/* === Gradient Styles === */
+.gradient-sewa {
+  background: linear-gradient(180deg, #222aff , #FFD2D2);
 }
 
-.gradient-blue {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+.gradient-stok {
+  background: linear-gradient(135deg, #222aff, #4d53ff);
 }
 
-.gradient-purple {
-  background: linear-gradient(135deg, #7c3aed, #9333ea);
-}
-
-.gradient-pink {
-  background: linear-gradient(135deg, #ec4899, #f472b6);
+.gradient-laporan {
+  background: linear-gradient(135deg, #222aff, #4d53ff);
 }
 
 /* === Content Layout: 2 Kolom === */
@@ -122,7 +137,7 @@
 .stat-item span {
   display: block;
   font-size: 1rem;
-  color:                            #666;
+  color: #666;
 }
 
 .stat-item strong {
@@ -204,12 +219,28 @@
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
+/* === Grafik Pertumbuhan Sidebar === */
+.growth-chart {
+  position: relative;
+}
+
 .growth-chart h2 {
   margin: 0 0 1rem 0;
   font-size: 1.3rem;
   color: #333;
 }
 
+.growth-chart .chart-placeholder {
+  width: 100%;
+  height: 18.75rem;
+}
+
+.growth-chart canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* === Legend & Summary === */
 .legend {
   display: flex;
   gap: 1rem;
@@ -250,21 +281,22 @@
   color: #10b981;
 }
 
-/* === Grafik Pertumbuhan Sidebar === */
-.growth-chart {
-  position: relative;
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
 }
 
-.growth-chart .chart-placeholder {
+.card-icon {
+  width: 2.2rem;
+  object-fit: contain;
+  flex-shrink: 0;
   position: relative;
-  width: 100%;
-  height: 18.75rem;
+  top: -3px; /* naik sedikit */
 }
 
-.growth-chart canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
+
 
 /* === RESPONSIF === */
 @media (max-width: 1200px) {

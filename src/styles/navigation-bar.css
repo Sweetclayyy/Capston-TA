@@ -1,41 +1,46 @@
 /* === Layout Utama === */
-.layout {
+.app-layout {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
   font-family: 'Poppins', sans-serif;
   background-color: #f9fafb;
   overflow: hidden; /* cegah scroll di layout utama */
 }
 
 /* === Sidebar === */
-.sidebar {
-  background-color: #1E3AFA;
+.sidebar,
+navbar-component {
   width: 14.375rem; /* 230px */
+  flex-shrink: 0;
+  height: 100vh;
+  background: #1E3AFA;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-top-right-radius: 0; /* 30px */
-  border-bottom-right-radius: 0; /* 30px */
-  color: white;
-  padding: 1.25rem 0; /* 20px */
-  padding-left: 2rem;
+  position: fixed; /* biar tetap di kiri */
+  top: 0;
+  left: 0;
+  padding: 20px 0;
+  z-index: 100;
 }
 
-/* Menu Navigasi */
+/* === Menu Navigasi === */
 .nav-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.3125rem; /* 5px */
-  margin-top: 0.625rem; /* 10px */
+  gap: 20px;
   padding-left: 2rem;
+  margin-top: 0.625rem;
 }
 
+/* === Item Navigasi === */
 .nav-item {
   display: flex;
-  display: flex;
   align-items: center;
-  padding: 0.75rem 0.75rem; /* 12px 25px */
-  border-radius: 1.875rem 0 0 1.875rem; /* 30px */
+  padding: 0.75rem 0.75rem;
+  border-radius: 1.875rem 0 0 1.875rem;
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.3s ease;
@@ -48,84 +53,61 @@
 .nav-item.active {
   background-color: white;
   color: #1E3AFA;
-  font-size: 0.85rem;
   font-weight: 600;
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
 }
 
+/* === Ikon Navigasi === */
 .nav-icon,
 .logout-icon {
   width: 2rem;
 }
 
-/* Tombol Logout */
+/* === Tombol Logout === */
 .logout-btn-blue {
   display: flex;
-  gap: 0.7rem; /* 8px */
-  background-color: #1E3AFA;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
   color: white;
   border: none;
-  border-radius: 0.5rem; /* 8px */
+  padding: 10px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem; /* 14px */
-
+  font-size: 14px;
+  margin: 0 auto 20px auto; /* tengah horizontal dan kasih jarak bawah */
 }
 
-/* Tombol Logout versi merah (opsional) */
-.logout-btn {
-  color: rgb(239, 12, 12);
-  text-align: left;
-  padding: 0.75rem 0.75rem; /* 12px 25px */
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
+.logout-icon {
+  width: 20px;
+  height: 20px;
 }
 
-.logout-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Area Utama */
+/* === Area Utama (Konten) === */
 .main-area {
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  margin-left: 14.375rem; /* kasih jarak sesuai lebar sidebar */
 }
 
-/* Navbar Atas */
-.topbar {
-  background: white;
-  height: 3.75rem; /* 60px */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2.5rem; /* 40px */
-  border-bottom: 0.0625rem solid #e5e7eb; /* 1px */
-  flex-shrink: 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.topbar h1 {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 600;
-  color: #333;
-}
-
-/* === Konten yang Bisa Scroll === */
+/* === Konten Scrollable === */
 #main-content {
   flex: 1;
   padding: 1.875rem; /* 30px */
   color: #333;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  overflow-y: auto;
+  height: 100vh;
+  margin-left: 14.375rem; /* geser sesuai sidebar */
+  background: #f9fafb;
 }
 
-/* Scrollbar Halus */
+/* === Scrollbar Halus === */
 #main-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -139,45 +121,31 @@
   background: #a1a1a1;
 }
 
-/* Animasi Fade */
+/* === Animasi Fade === */
 .fade {
   transition: opacity 0.4s ease;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* nav-menu di atas, logout di bawah */
-  height: 100vh;
-  background-color: #1E3AFA;
-  padding: 20px 0;
+/* === Responsif === */
+@media (max-width: 768px) {
+  .sidebar,
+  navbar-component {
+    width: 200px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active,
+  navbar-component.active {
+    transform: translateX(0);
+  }
+
+  .main-area {
+    margin-left: 0;
+  }
+
+  #main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
 }
-
-.nav-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.logout-btn-blue {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #1E3AFA;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  margin: 0 auto 20px auto; /* tengah horizontal dan kasih jarak bawah */
-}
-
-.logout-icon {
-  width: 20px;
-  height: 20px;
-}
-
-

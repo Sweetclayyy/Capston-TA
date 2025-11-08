@@ -1,0 +1,77 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 14.375rem; /* lebar sidebar */
+  right: 0;
+  height: 4rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 1000;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.topbar h1#page-title {
+  font-size: 1.2rem; /* sesuai request kamu */
+  font-weight: 600;   /* supaya agak tegas */
+  margin: 0;
+}
+
+/* === Konten utama === */
+.main-content-area {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  margin-top: 4rem; /* ini ganti padding-top jadi margin-top biar gak double spacing */
+}
+
+.topbar .logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* jarak antara ikon dan teks */
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  color: rgb(45, 45, 45);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.topbar .logout-btn:hover {
+  background-color: transparent;
+  transform: translateY(-1px);
+}
+
+.logout-icon {
+  width: 1.5rem;   /* ukuran ikon sesuai proporsional */
+  height: 1.5rem;
+  object-fit: contain;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* jarak tombol logout dan avatar */
+}
+
+.avatar-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%; /* bulat */
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.avatar-icon:hover {
+  transform: scale(1.05); /* efek hover ringan */
+}
+
+

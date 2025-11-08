@@ -15,11 +15,15 @@
     <title>AgriEdu</title>
   </head>
   <body>
-    <!-- Navbar tetap di sini, tidak dibuat via JS -->
+      <div id="app-layout" class="app-layout">
+
     <navbar-component></navbar-component>
 
-    <!-- Hanya ini yang berubah saat navigasi -->
-    <div id="main-content"></div>
+    <div class="main-wrapper">
+      <header-component></header-component>
+      <main id="main-content"></main>
+    </div>
+  </div>
 
     <!-- Drawer (opsional, untuk mobile) -->
     <button

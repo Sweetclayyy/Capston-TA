@@ -1,3 +1,4 @@
+// src/components/NavbarComponent.js
 class NavbarComponent extends HTMLElement {
   connectedCallback() {
     if (!document.querySelector('link[href$="navigation-bar.css"]')) {
@@ -8,88 +9,58 @@ class NavbarComponent extends HTMLElement {
     }
 
     this.innerHTML = `
-      <div class="layout">
-        <aside class="sidebar">
-          <div class="nav-menu">
-            <div class="nav-item" data-route="/dashboard" data-icon="dasboard">
-              <img src="/logo/dasbor-blue.png" alt="Dashboard" class="nav-icon" />
-              <span>Dasbor</span>
-            </div>
-            <div class="nav-item" data-route="/sewa" data-icon="sewa">
-              <img src="/logo/sewa-white.png" alt="Sewa" class="nav-icon" />
-              <span>Sewa</span>
-            </div>
-            <div class="nav-item" data-route="/stok" data-icon="stok">
-              <img src="/logo/stok-white.png" alt="Stok" class="nav-icon" />
-              <span>Stok</span>
-            </div>
-            <div class="nav-item" data-route="/laporanKeuangan" data-icon="laporan">
-              <img src="/logo/laporan-white.png" alt="Laporan Keuangan" class="nav-icon" />
-              <span>Laporan Keuangan</span>
-            </div>
+      <aside class="sidebar">
+        <div class="nav-menu">
+          <div class="nav-item" data-route="/dashboard" data-icon="dasbor">
+            <img src="/logo/dasbor-blue.png" alt="Dashboard" class="nav-icon" />
+            <span>Dasbor</span>
           </div>
+          <div class="nav-item" data-route="/sewa" data-icon="sewa">
+            <img src="/logo/sewa-white.png" alt="Sewa" class="nav-icon" />
+            <span>Sewa</span>
+          </div>
+          <div class="nav-item" data-route="/stok" data-icon="stok">
+            <img src="/logo/stok-white.png" alt="Stok" class="nav-icon" />
+            <span>Stok</span>
+          </div>
+          <div class="nav-item" data-route="/laporanKeuangan" data-icon="laporan">
+            <img src="/logo/laporan-white.png" alt="Laporan Keuangan" class="nav-icon" />
+            <span>Laporan Keuangan</span>
+          </div>
+        </div>
 
-          <button class="logout-btn-blue" data-route="/logout">
-            <img src="./logo/logout-white.png" alt="Logout Icon" class="logout-icon" />
-            <span>Logout</span>
-          </button>
-        </aside>
-
-        <main class="main-area">
-          <header class="topbar">
-            <h1 id="page-title">Dashboard</h1>
-            <button class="logout-btn" data-route="/logout">Logout</button>
-          </header>
-        </main>
-      </div>
+        <button class="logout-btn-blue" data-route="/logout">
+          <img src="./logo/logout-white.png" alt="Logout Icon" class="logout-icon" />
+          <span>Logout</span>
+        </button>
+      </aside>
+      
     `;
 
-    this.#initNavigation();
+    this.initNavigation();
   }
 
-  #initNavigation() {
-    const items = this.querySelectorAll(".nav-item, .logout-btn, .logout-btn-blue");
-    const title = this.querySelector("#page-title");
-
-    const updateTitle = (route) => {
-      if (!title) return;
-      let cleanTitle = route.replace("/", "");
-      cleanTitle = cleanTitle.replace(/([a-z])([A-Z])/g, "$1 $2");
-      cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
-      if (route === "/dashboard") cleanTitle = "Dashboard";
-      title.textContent = cleanTitle;
-    };
-      if (!title) return;
-      let cleanTitle = route.replace("/", "");
-      cleanTitle = cleanTitle.replace(/([a-z])([A-Z])/g, "$1 $2");
-      cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
-      if (route === "/dashboard") cleanTitle = "Dashboard";
-      title.textContent = cleanTitle;
-    };
-
+  initNavigation() {
+    const items = this.querySelectorAll(".nav-item, .logout-btn-blue");
     const currentPath = window.location.hash.slice(1) || "/dashboard";
-    this.#setActiveMenu(currentPath);
-    updateTitle(currentPath);
+    this.setActiveMenu(currentPath);
 
     items.forEach((item) => {
       item.addEventListener("click", () => {
         const route = item.dataset.route;
         if (!route) return;
-
         window.location.hash = route;
-        this.#setActiveMenu(route);
-        updateTitle(route);
+        this.setActiveMenu(route);
+        document.dispatchEvent(new CustomEvent("route-changed", { detail: route }));
       });
     });
   }
 
-  #setActiveMenu(route) {
+  setActiveMenu(route) {
     const items = this.querySelectorAll(".nav-item");
-
     items.forEach((item) => {
       const iconBase = item.dataset.icon;
       const img = item.querySelector(".nav-icon");
-
       if (item.dataset.route === route) {
         item.classList.add("active");
         img.src = `/logo/${iconBase}-blue.png`;

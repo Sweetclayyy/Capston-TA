@@ -10,7 +10,6 @@ class App {
     this.navigationDrawer = navigationDrawer;
 
     this.router = new Router();
-
     this.router.registerRoutes(getRoutes(content));
 
     this.router
@@ -35,7 +34,6 @@ class App {
 
   async init() {
     this.checkAuthStatus();
-
     this.router.start();
 
     if (this.drawerButton && this.navigationDrawer) {
@@ -68,57 +66,66 @@ class App {
     }
   }
 
- async renderPage(pageInstance) {
-  if (this.content && pageInstance) {
-    try {
-      console.log("Rendering page instance:", pageInstance);
+  async renderPage(pageInstance) {
+    if (this.content && pageInstance) {
+      try {
+        console.log("Rendering page instance:", pageInstance);
 
-      const content = await pageInstance.render();
+        const content = await pageInstance.render();
 
-      if (content) {
-        // Render halaman (mungkin berisi navbar)
-        this.content.innerHTML = content;
+        // 🔥 Sembunyikan navbar & header di halaman login
+        const navbar = document.querySelector("navbar-component");
+        const header = document.querySelector("header-component");
+        const isLoginPage = window.location.hash === "#/login";
 
-        // Cek apakah di dalam halaman ini ada <navbar-component>
-        const mainContentInsideNavbar = document.querySelector("navbar-component #main-content");
+        if (navbar) navbar.style.display = isLoginPage ? "none" : "flex";
+        if (header) header.style.display = isLoginPage ? "none" : "block";
 
-        // Kalau iya, arahkan this.content ke situ supaya router isi bagian ini saja ke depannya
-        if (mainContentInsideNavbar) {
-          this.content = mainContentInsideNavbar;
+        if (content) {
+          // Render halaman (mungkin berisi navbar)
+          this.content.innerHTML = content;
+
+          // Cek apakah di dalam halaman ini ada <navbar-component>
+          const mainContentInsideNavbar = document.querySelector(
+            "navbar-component #main-content"
+          );
+
+          // Kalau iya, arahkan this.content ke situ supaya router isi bagian ini saja ke depannya
+          if (mainContentInsideNavbar) {
+            this.content = mainContentInsideNavbar;
+          }
+
+          if (pageInstance.afterRender) {
+            await pageInstance.afterRender();
+          }
+
+          Link.updateLinks(this.content, this.router);
+          this.setupInPageNavigation();
+        } else {
+          console.error("Page render method returned undefined or empty content");
+          this.content.innerHTML = `
+            <div class="error-container">
+              <h2>Error rendering page</h2>
+              <p>The page content could not be loaded.</p>
+            </div>
+          `;
         }
-
-        if (pageInstance.afterRender) {
-          await pageInstance.afterRender();
-        }
-
-        Link.updateLinks(this.content, this.router);
-        this.setupInPageNavigation();
-      } else {
-        console.error("Page render method returned undefined or empty content");
+      } catch (error) {
+        console.error("Error rendering page:", error);
         this.content.innerHTML = `
           <div class="error-container">
             <h2>Error rendering page</h2>
-            <p>The page content could not be loaded.</p>
+            <p>${error.message}</p>
           </div>
         `;
       }
-    } catch (error) {
-      console.error("Error rendering page:", error);
-      this.content.innerHTML = `
-        <div class="error-container">
-          <h2>Error rendering page</h2>
-          <p>${error.message}</p>
-        </div>
-      `;
+    } else {
+      console.error("Content element missing or invalid page instance", {
+        contentExists: !!this.content,
+        pageInstanceExists: !!pageInstance,
+      });
     }
-  } else {
-    console.error("Content element missing or invalid page instance", {
-      contentExists: !!this.content,
-      pageInstanceExists: !!pageInstance,
-    });
   }
-}
-
 
   setupInPageNavigation() {
     console.log("Setting up in-page navigation in App");

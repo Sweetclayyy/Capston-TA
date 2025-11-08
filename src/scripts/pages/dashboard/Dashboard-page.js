@@ -1,4 +1,5 @@
-// src/pages/dashboard/Dashboard-page.js
+import '../../components/HeaderComponent.js';
+
 
 export default class Dashboard {
   constructor() {
@@ -9,22 +10,35 @@ export default class Dashboard {
 
   async render() {
     return `
+         <div class="main-content-wrapper">
       <section class="quick-actions-row">
-        <div class="quick-action-card gradient-blue" data-href="#/sewa">
-          <h3>Sewa</h3>
-          <p>Lakukan proses pencatatan sewa barang disini</p>
-          <span class="see-more">Lihat Selengkapnya →</span>
-        </div>
-        <div class="quick-action-card gradient-purple" data-href="#/stok">
-          <h3>Stok</h3>
-          <p>Manajemen stok barang sewa</p>
-          <span class="see-more">Lihat Selengkapnya →</span>
-        </div>
-        <div class="quick-action-card gradient-pink" data-href="#/laporanKeuangan">
-          <h3>Laporan Keuangan</h3>
-          <p>Lihat laporan keuangan disini</p>
-          <span class="see-more">Lihat Selengkapnya →</span>
-        </div>
+<div class="quick-action-card gradient-sewa" data-href="#/sewa">
+  <div class="card-title">
+    <img src="/logo/sewa-white.png" alt="Sewa" class="card-icon" />
+    <h3>Sewa</h3>
+  </div>
+  <p>Lakukan proses pencatatan sewa barang disini</p>
+  <span class="see-more">Lihat Selengkapnya →</span>
+</div>
+
+<div class="quick-action-card gradient-stok" data-href="#/stok">
+  <div class="card-title">
+    <img src="/logo/stok-white.png" alt="Stok" class="card-icon" />
+    <h3>Stok</h3>
+  </div>
+  <p>Manajemen stok barang sewa</p>
+  <span class="see-more">Lihat Selengkapnya →</span>
+</div>
+
+<div class="quick-action-card gradient-laporan" data-href="#/laporanKeuangan">
+  <div class="card-title">
+    <img src="/logo/laporan-white.png" alt="Laporan Keuangan" class="card-icon" />
+    <h3>Laporan Keuangan</h3>
+  </div>
+  <p>Lihat laporan keuangan disini</p>
+  <span class="see-more">Lihat Selengkapnya →</span>
+</div>
+
       </section>
 
       <div class="content-layout">
@@ -76,7 +90,7 @@ export default class Dashboard {
               <canvas id="growthChart"></canvas>
             </div>
             <div class="legend">
-              <span><i style="background: #a5b4fc;"></i> Bulan Lalu</span>
+              <span><i style="background: #FFD2D2;"></i> Bulan Lalu</span>
               <span><i style="background: #4f46e5;"></i> Bulan Ini</span>
             </div>
           </div>
@@ -87,6 +101,7 @@ export default class Dashboard {
             <div class="trend-icon">📈</div>
           </div>
         </aside>
+         </div>
       </div>
     `;
   }
@@ -212,7 +227,7 @@ export default class Dashboard {
           {
             label: "Keuntungan (Rp)",
             data: [3800000, 4750000],
-            backgroundColor: ["#a5b4fc", "#4f46e5"],
+            backgroundColor: ["#FFD2D2", "#4f46e5"],
             borderRadius: 8,
             borderSkipped: false,
           },
