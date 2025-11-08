@@ -39,7 +39,7 @@
   border: none;
   border-radius: 0.5rem;
   background-color: transparent;
-  color: rgb(45, 45, 45);
+  color: rgb(243, 61, 61);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
