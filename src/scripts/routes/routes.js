@@ -1,133 +1,86 @@
-import RouteGuard from "./route-guard.js";
+// router.js (ganti nama file jadi ini lebih jelas)
+import Login from "../pages/login/LoginPage.js";
+import LandingPresenter from "../pages/landing-page/LandingPage-Presenter.js";
+import Logout from "../pages/logout/LogoutPage.js";
+import Dashboard from "../pages/dashboard/Dashboard-page.js";
+import LaporanPage from "../pages/laporanKeuangan/LaporanKeuanganPage.js";
+import StokPage from "../pages/stok/StokPage.js";
+import ProfilePage from "../pages/profile/profile-page.js";
+import SewaPage from "../pages/penyewaan/SewaPage.js";
+import SewaForm from "../pages/penyewaan/SewaForm.js";
 
-class Router {
-  constructor() {
-    this.routes = {};
-    this.currentPath = "";
-    this.beforeRouteCallback = null;
-    this.afterRouteCallback = null;
-    this.notFoundCallback = null;
-  }
+let currentPage = null;
+const mainContent = document.querySelector("#main-content");
 
-  registerRoutes(routes) {
-    this.routes = routes;
-    return this;
-  }
+if (!mainContent) {
+  console.error("❌ #main-content tidak ditemukan di DOM!");
+}
 
-  beforeRoute(callback) {
-    this.beforeRouteCallback = callback;
-    return this;
-  }
-
-  afterRoute(callback) {
-    this.afterRouteCallback = callback;
-    return this;
-  }
-
-  setNotFoundCallback(callback) {
-    this.notFoundCallback = callback;
-    return this;
-  }
-
-  start() {
-    window.addEventListener("hashchange", () => {
-      this.handleRouteChange();
-    });
-
-    this.handleRouteChange();
-
-    return this;
-  }
-
-  handleRouteChange() {
-    const path = this.getPathFromHash();
-
-    if (path === this.currentPath) {
-      return;
-    }
-
-    this.currentPath = path;
-
-    if (RouteGuard.requiresAuth(path) && !RouteGuard.isAuthenticated()) {
-      console.log(
-        Route ${path} requires authentication. Redirecting to login.
-      );
-      window.location.hash = RouteGuard.getAuthRedirectPath().substring(1);
-      return;
-    }
-
-    if (this.beforeRouteCallback && !this.beforeRouteCallback(path)) {
-      return;
-    }
-
-    const pageInstance = this.routes[path];
-
-    if (pageInstance) {
-      if (this.afterRouteCallback) {
-        this.afterRouteCallback(path, pageInstance);
-      }
-    } else {
-      if (this.notFoundCallback) {
-        this.notFoundCallback(path);
-      }
-    }
-  }
-
-  getPathFromHash() {
-    const hash = window.location.hash.substring(1);
-
-    const pathWithoutQuery = hash.split("?")[0];
-
-    return pathWithoutQuery || "/";
-  }
-
-  navigate(path) {
-    window.location.hash = path;
-  }
-
-  scrollToElement(element, updateUrl = false) {
-    if (!element) return;
-
-    if ("scrollBehavior" in document.documentElement.style) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    } else {
-      this.smoothScrollPolyfill(element);
-    }
-
-    if (updateUrl && element.id) {
-      history.pushState(null, null, #${element.id});
-    }
-  }
-
-  smoothScrollPolyfill(element) {
-    const targetPosition =
-      element.getBoundingClientRect().top + window.pageYOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 500; // ms
-    let startTime = null;
-
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    }
-
-    function ease(t, b, c, d) {
-      t /= d / 2;
-      if (t < 1) return (c / 2) * t * t + b;
-      t--;
-      return (-c / 2) * (t * (t - 2) - 1) + b;
-    }
-
-    requestAnimationFrame(animation);
+function createPage(path) {
+  switch (path) {
+    case "/login":
+      return new Login();
+    case "/landing":
+      return new LandingPresenter(mainContent);
+    case "/dashboard":
+      return new Dashboard();
+    case "/logout":
+      return new Logout();
+    case "/laporanKeuangan":
+      return new LaporanPage();
+    case "/stok":
+      return new StokPage();
+    case "/profile":
+      return new ProfilePage();
+    case "/sewa":
+      return new SewaPage();
+    case "/sewaForm":
+      return new SewaForm();
+    default:
+      return null;
   }
 }
 
-export default Router;
- router.js
+export function navigateTo(path) {
+  // 🔴 1. Unmount halaman sebelumnya jika ada
+  if (currentPage && typeof currentPage.unmount === "function") {
+    currentPage.unmount();
+  }
+
+  // 🟢 2. Redirect root ke /landing
+  if (path === "/") {
+    window.history.replaceState(null, "", "/landing");
+    path = "/landing";
+  }
+
+  // 🟢 3. Buat halaman baru
+  let page = createPage(path);
+
+  if (!page) {
+    console.error(`PageRoute not found: ${path}`);
+    return;
+  }
+
+  // 🟢 4. Simpan sebagai halaman aktif
+  currentPage = page;
+
+  // 🟢 5. Render halaman
+  if (typeof page.afterRender === "function") {
+    page.afterRender();
+  } else if (typeof page.render === "function") {
+    // fallback untuk halaman sederhana
+    mainContent.innerHTML = page.render();
+  }
+}
+
+// 🔄 Tangani perubahan hash
+window.addEventListener("hashchange", () => {
+  const hash = window.location.hash.slice(1) || "/";
+  navigateTo(hash);
+});
+
+// 🔁 Load halaman pertama saat app start
+document.addEventListener("DOMContentLoaded", () => {
+  const initialHash = window.location.hash.slice(1) || "/";
+  navigateTo(initialHash);
+});
