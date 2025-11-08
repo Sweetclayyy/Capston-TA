@@ -1,3 +1,5 @@
+import '../../components/HeaderComponent.js';
+
 export default class SewaForm {
   constructor() {
   }
