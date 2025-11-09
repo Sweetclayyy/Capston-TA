@@ -66,7 +66,7 @@ export default class StokPage {
 <div id="stokFormOverlay" class="stok-modal-overlay hidden">
   <div class="stok-modal-card form-card">
     <span id="closeFormModal" class="close-btn">&times;</span>
-    <h2>Tambah Stok Baru</h2>
+    <h2>+ Tambah Stok Baru</h2>
     <form id="stokForm">
       <div class="form-group">
         <label for="namaBarang">Nama Barang</label>
@@ -88,7 +88,7 @@ export default class StokPage {
         <label for="hargaBarang">Harga</label>
         <input type="number" id="hargaBarang" min="0" required>
       </div>
-      <button type="submit" class="btn-tambah">Simpan Stok</button>
+      <button type="submit" class="btn-submit">Simpan Stok</button>
     </form>
   </div>
 </div>
@@ -124,6 +124,6 @@ export default class StokPage {
       element.removeEventListener("click", callback)
     );
     this.navClickHandlers = [];
-    console.log("✅ StokPage unmounted: listeners cleaned up.");
+    console.log("StokPage unmounted: listeners cleaned up.");
   }
 }
