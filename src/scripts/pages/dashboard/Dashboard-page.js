@@ -17,7 +17,8 @@ export default class Dashboard {
               <h3>Sewa</h3>
             </div>
             <p>Lakukan proses pencatatan sewa barang disini</p>
-            <span class="see-more">Lihat Selengkapnya →</span>
+            <span class="see-more"> Lihat Selengkapnya <img src="/logo/panah.png" alt="Panah" class="arrow-icon" />
+            </span>
           </div>
 
           <div class="quick-action-card gradient-stok" data-href="#/stok">
@@ -26,7 +27,8 @@ export default class Dashboard {
               <h3>Stok</h3>
             </div>
             <p>Manajemen stok barang sewa</p>
-            <span class="see-more">Lihat Selengkapnya →</span>
+            <span class="see-more"> Lihat Selengkapnya <img src="/logo/panah.png" alt="Panah" class="arrow-icon" />
+            </span>
           </div>
 
           <div class="quick-action-card gradient-laporan" data-href="#/laporanKeuangan">
@@ -35,7 +37,8 @@ export default class Dashboard {
               <h3>Laporan Keuangan</h3>
             </div>
             <p>Lihat laporan keuangan disini</p>
-            <span class="see-more">Lihat Selengkapnya →</span>
+            <span class="see-more"> Lihat Selengkapnya <img src="/logo/panah.png" alt="Panah" class="arrow-icon" />
+            </span>
           </div>
         </section>
 
@@ -53,7 +56,7 @@ export default class Dashboard {
                     <span>Prediksi keuntungan bulan depan</span>
                     <strong>Rp18.500.000</strong>
                   </div>
-                  <button class="btn-see-more">Lihat Selengkapnya →</button>
+                  <button class="btn-see-more">Lihat Selengkapnya <img src="/logo/panah.png" alt="Panah" class="arrow-icon" /></button>
                 </div>
                 <div class="financial-chart">
                   <canvas id="financialChart"></canvas>
@@ -62,23 +65,33 @@ export default class Dashboard {
             </section>
 
             <section class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-title">Jumlah Stok Barang</div>
-                <div class="stat-value">38</div>
-                <div class="stat-sub">Baju Karnaval</div>
-                <div class="stat-sub">20 Baju Designer</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-title">Jumlah Sewa</div>
-                <div class="stat-value">38</div>
-                <div class="stat-sub">Barang Disewa</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-title">Jumlah Kembali</div>
-                <div class="stat-value">10</div>
-                <div class="stat-sub">Barang Kembali</div>
-              </div>
-            </section>
+  <div class="stat-card">
+    <div class="stat-title">Jumlah Stok Barang</div>
+    <div class="stat-values">
+      <div>
+        <div class="stat-value">38</div>
+        <div class="stat-sub">Baju Karnaval</div>
+      </div>
+      <div>
+        <div class="stat-value">20</div>
+        <div class="stat-sub">Baju Designer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">Jumlah Sewa</div>
+    <div class="stat-value">38</div>
+    <div class="stat-sub">Barang Disewa</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">Jumlah Kembali</div>
+    <div class="stat-value">10</div>
+    <div class="stat-sub">Barang Kembali</div>
+  </div>
+</section>
+
           </div>
 
 <aside class="dashboard-sidebar">
@@ -95,9 +108,12 @@ export default class Dashboard {
     <!-- Growth summary pindah ke dalam card ini -->
     <div class="growth-summary">
       <div class="summary-title">Pertumbuhan Keuntungan Bulan Ini</div>
-      <div class="summary-value">Rp150.000</div>
-      <div class="trend-icon">📈</div>
+  <div class="summary-info">
+    <div class="summary-value">Rp150.000</div>
+    <div class="trend-icon">
+      <img src="/logo/arrow.png" alt="Trend Naik" class="arrow-up" />
     </div>
+  </div>
   </div>
 </aside>
 
@@ -179,8 +195,8 @@ _initFinancialChart() {
 
   // === Gradient untuk 2021 (merah) ===
   const gradientRed = ctx.createLinearGradient(0, 0, 0, 400);
-  gradientRed.addColorStop(0, "rgba(239, 68, 68, 0.4)");
-  gradientRed.addColorStop(0.7, "rgba(239, 68, 68, 0.15)");
+  gradientRed.addColorStop(0, "rgba(255, 221, 221, 0.4)");
+  gradientRed.addColorStop(1, "rgba(243, 46, 46, 0.15)");
   gradientRed.addColorStop(1, "rgba(239, 68, 68, 0)");
 
   this.financialChart = new Chart(ctx, {
