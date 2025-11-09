@@ -40,21 +40,33 @@ class NavbarComponent extends HTMLElement {
     this.initNavigation();
   }
 
-  initNavigation() {
-    const items = this.querySelectorAll(".nav-item, .logout-btn-blue");
-    const currentPath = window.location.hash.slice(1) || "/dashboard";
-    this.setActiveMenu(currentPath);
-
-    items.forEach((item) => {
-      item.addEventListener("click", () => {
-        const route = item.dataset.route;
-        if (!route) return;
-        window.location.hash = route;
-        this.setActiveMenu(route);
-        document.dispatchEvent(new CustomEvent("route-changed", { detail: route }));
-      });
-    });
+initNavigation() {
+  const items = this.querySelectorAll(".nav-item, .logout-btn-blue");
+  let currentPath = window.location.hash.replace("#", "");
+  if (!currentPath || currentPath === "/") {
+    currentPath = "/dashboard"; 
   }
+
+
+  this.setActiveMenu(currentPath);
+  document.dispatchEvent(new CustomEvent("route-changed", { detail: currentPath }));
+
+  window.addEventListener("hashchange", () => {
+    const newPath = window.location.hash.replace("#", "") || "/dashboard";
+    this.setActiveMenu(newPath);
+    document.dispatchEvent(new CustomEvent("route-changed", { detail: newPath }));
+  });
+
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      const route = item.dataset.route;
+      if (!route) return;
+      window.location.hash = route;
+    });
+  });
+}
+
+
 
   setActiveMenu(route) {
     const items = this.querySelectorAll(".nav-item");

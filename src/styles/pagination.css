@@ -1,0 +1,54 @@
+/* === PAGINATION STYLING === */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.page-btn,
+.page-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #4b5563;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.page-btn:hover,
+.page-number:hover {
+  background-color: #f3f4f6;
+}
+
+.page-number.active {
+  background-color: #4f46e5;
+  color: #fff;
+  border-color: #4f46e5;
+  font-weight: 600;
+  cursor: default;
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Tambahan kecil untuk tampilan mobile */
+@media (max-width: 600px) {
+  .page-btn,
+  .page-number {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 0.8rem;
+  }
+}
