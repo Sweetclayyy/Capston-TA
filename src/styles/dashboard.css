@@ -31,14 +31,15 @@
   padding: 1.25rem;
   border-radius: 0.75rem;
   color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* ✅ shadow lebih tebal */
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+
 .quick-action-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.32);
 }
 
 .quick-action-card h3 {
@@ -105,7 +106,7 @@
   background: white;
   border-radius: 0.75rem;
   padding: 1.25rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 

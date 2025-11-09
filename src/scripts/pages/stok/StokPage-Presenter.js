@@ -154,12 +154,42 @@ this.bindCardClickEvents();
     searchInput.addEventListener("input", updateList);
   }
 
-  handleAddStock() {
-    const addBtn = document.querySelector("#addStockBtn");
-    addBtn?.addEventListener("click", () => {
-      window.location.hash = "#/StokForm";
-    });
-  }
+handleAddStock() {
+  const addBtn = document.querySelector("#addStockBtn");
+  const formOverlay = document.querySelector("#stokFormOverlay");
+  const closeFormModal = document.querySelector("#closeFormModal");
+  const stokForm = document.querySelector("#stokForm");
+
+  if (!addBtn || !formOverlay || !closeFormModal || !stokForm) return;
+
+  // ✅ Saat klik tombol "Tambah Stok" → tampilkan overlay
+  addBtn.addEventListener("click", () => {
+    formOverlay.classList.remove("hidden");
+  });
+
+  // ✅ Tutup modal saat klik tanda × atau klik luar
+  closeFormModal.addEventListener("click", () => {
+    formOverlay.classList.add("hidden");
+  });
+  formOverlay.addEventListener("click", (e) => {
+    if (e.target === formOverlay) formOverlay.classList.add("hidden");
+  });
+
+  // ✅ Tangani submit form
+  stokForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nama = document.querySelector("#namaBarang").value;
+    const kategori = document.querySelector("#kategoriBarang").value;
+    const stok = parseInt(document.querySelector("#stokBarang").value);
+    const harga = parseInt(document.querySelector("#hargaBarang").value);
+
+    alert(`Stok baru ditambahkan:\nNama: ${nama}\nKategori: ${kategori}\nStok: ${stok}\nHarga: Rp ${harga.toLocaleString("id-ID")}`);
+
+    formOverlay.classList.add("hidden");
+    stokForm.reset();
+  });
+}
+
 
   bindCardClickEvents() {
   const cards = document.querySelectorAll(".stok-card");
