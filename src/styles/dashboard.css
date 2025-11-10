@@ -28,6 +28,7 @@
 }
 
 .quick-action-card {
+  
   padding: 1.25rem;
   border-radius: 0.75rem;
   color: white;
@@ -406,4 +407,5 @@
   font-size: 0.9rem;
   color: #3242ff;
 }
+
 

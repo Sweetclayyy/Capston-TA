@@ -1,5 +1,6 @@
 import "../../components/Navbar.js";
 import StokPagePresenter from "./StokPage-Presenter.js";
+import initGlobalScrollAnimation from '../../components/scroll-animation.js';
 
 export default class StokPage {
   constructor() {
@@ -11,25 +12,25 @@ export default class StokPage {
     return `
 <section class="stok-container">
   <div class="stok-wrapper">
-        <h2 class="judul">Menejemen Stok</h2>
-  <div class="stok-stats">
-  <div class="stat-card">
+        <h2 class="judul scroll-animate">Menejemen Stok </h2>
+  <div class="stok-stats scroll-animate">
+  <div class="stat-card-stok scroll-animate">
     <h3>Jumlah Baju Disewa</h3>
-    <p class="stat-number">125</p>
+    <p class="stat-number-stok ">125</p>
   </div>
-  <div class="stat-card">
+  <div class="stat-card-stok scroll-animate">
     <h3>Jumlah Stok Baju</h3>
-    <p class="stat-number">84</p>
+    <p class="stat-number-stok ">84</p>
   </div>
-  <div class="stat-card">
+  <div class="stat-card-stok scroll-animate">
     <h3>Jumlah Baju Kembali</h3>
-    <p class="stat-number">73</p>
+    <p class="stat-number-stok">73</p>
   </div>
 </div>
 
-    <header class="stok-header">
+    <header class="stok-header scroll-animate">
       <h2>Katalog Produk</h2>
-      <div class="stok-actions">
+      <div class="stok-actions ">
         <label for="filterKategori">Filter Kategori:</label>
         <select id="filterKategori" class="filter-dropdown">
           <option value="all">All Category</option>
@@ -40,7 +41,7 @@ export default class StokPage {
       </div>
       
     </header>
-<div class="stok-search">
+<div class="stok-search scroll-animate">
   <input
     type="text"
     id="searchInput"
@@ -50,9 +51,8 @@ export default class StokPage {
   <img src="/logo/search.png" alt="Search Icon" class="search-icon" />
 </div>
 
-    <section id="stokGrid" class="stok-grid"></section>
+    <section id="stokGrid" class="stok-grid scroll-animate"></section>
 
-    <!-- Modal Detail Produk -->
 <div id="stokModal" class="stok-modal-overlay hidden">
   <div class="stok-modal-card">
     <span id="closeModal" class="close-btn">&times;</span>
@@ -94,7 +94,7 @@ export default class StokPage {
 </div>
 
 
-    <div class="pagination">
+    <div class="pagination scroll-animate">
       <span class="page-btn" id="prevPage">&lt;</span>
       <span class="page-number active">1</span>
       <span class="page-number">2</span>
@@ -111,6 +111,7 @@ export default class StokPage {
     await this.presenter.renderStockList();
     this.presenter.handleFilter();
     this.presenter.handleAddStock();
+    initGlobalScrollAnimation();
   }
 
   async _injectContent() {
