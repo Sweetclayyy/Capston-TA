@@ -104,3 +104,18 @@
   }
 }
 
+@media (max-width: 768px) {
+  #main-content {
+    padding: 1rem; /* sedikit lebih kecil di tablet */
+    margin-top: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #main-content {
+    padding: 0.75rem; /* lebih kecil di layar hp */
+    margin-top: 3.25rem;
+    min-height: calc(100vh - 3.25rem);
+  }
+}
+

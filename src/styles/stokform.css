@@ -1,4 +1,4 @@
-/* Overlay penuh layar */
+
 .stok-modal-overlay {
   position: fixed;
   top: 0;
@@ -12,6 +12,25 @@
   z-index: 999;
   backdrop-filter: blur(4px);
 }
+
+.btn-submit {
+  width: 100%;
+  display: block;
+  background-color: #1E3AFA;
+  color: white;
+  font-weight: normal;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-tambah:hover {
+  background-color: #162cd4;
+}
+
 
 /* Hidden default */
 .hidden {
@@ -39,15 +58,26 @@
   color: #333;
 }
 
+.stok-modal-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+    border-bottom: 2px solid #d9d9d9; 
+  
+}
+
+
 /* Form styling */
 .form-group {
   margin-bottom: 1.2rem;
+  margin-top: 1.2rem;
   display: flex;
   flex-direction: column;
 }
 .form-group label {
+  font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  color: #333;
+  margin-bottom: 0.4rem;
 }
 .form-group input,
 .form-group select {
@@ -59,4 +89,107 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* === Toast Container (CENTERED) === */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background-color: #1E3AFA;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  padding: 2rem 2.5rem;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.toast-text {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* === Checkmark Animation (Center Version) === */
+.checkmark-wrapper {
+  width: 64px;
+  height: 64px;
+}
+
+.checkmark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 3;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0 0 0 #1E3AFA;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke: #fff;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+/* === Animasi SVG === */
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0 0 0 30px #1E3AFA;
+  }
+}
+
+.toast-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toast-overlay.show {
+  opacity: 1;
 }

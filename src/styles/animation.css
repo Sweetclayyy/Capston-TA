@@ -1,0 +1,34 @@
+/* Awal: elemen belum muncul sama sekali */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: 
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out,
+    visibility 0s linear 0.8s; /* delay visibility biar gak kedip */
+}
+
+/* Saat terlihat di viewport */
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s; /* muncul langsung saat terlihat */
+}
+
+/* (Opsional) Kalau mau versi dengan keyframes juga */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}

@@ -290,7 +290,7 @@
   margin:1rem 0rem;
 }
 
-.stat-card {
+.stat-card-stok {
   flex: 1;
   background: #f9fafb;
   border: 1px solid #d1d5db;
@@ -299,16 +299,18 @@
   text-align: center;
 }
 
-.stat-card h3 {
+.stat-card-stok h3 {
   font-size: 0.85rem;
   color: #555;
   margin-bottom: 0.4rem;
   font-weight: 500;
 }
 
-.stat-number {
+.stat-number-stok {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1E3AFA;
 }
+
+
 

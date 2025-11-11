@@ -183,7 +183,8 @@ handleAddStock() {
     const stok = parseInt(document.querySelector("#stokBarang").value);
     const harga = parseInt(document.querySelector("#hargaBarang").value);
 
-    alert(`Stok baru ditambahkan:\nNama: ${nama}\nKategori: ${kategori}\nStok: ${stok}\nHarga: Rp ${harga.toLocaleString("id-ID")}`);
+    showToast(`Berhasil menambahkan stok: ${nama}`);
+
 
     formOverlay.classList.add("hidden");
     stokForm.reset();
@@ -226,3 +227,42 @@ handleAddStock() {
 }
 
 }
+
+function showToast(message) {
+  const existingToast = document.querySelector(".toast");
+  if (existingToast) existingToast.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "toast-overlay";
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `
+    <div class="checkmark-wrapper">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16" />
+      </svg>
+    </div>
+    <span class="toast-text">${message}</span>
+  `;
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    overlay.classList.add("show");
+    toast.classList.add("show");
+  }, 100);
+
+  // Hilang otomatis setelah 3 detik
+  setTimeout(() => {
+    overlay.classList.remove("show");
+    toast.classList.remove("show");
+    setTimeout(() => {
+      overlay.remove();
+      toast.remove();
+    }, 400);
+  }, 3000);
+}
+
