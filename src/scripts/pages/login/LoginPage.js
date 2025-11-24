@@ -1,4 +1,53 @@
 export default class Login {
+
+showToast(message, isError = false) {
+  const existingToast = document.querySelector(".toast");
+  if (existingToast) existingToast.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "toast-overlay";
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+
+  // === GANTI ICON SESUAI STATUS (ceklis / silang) ===
+  const iconSVG = isError
+    ? `
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark-check" fill="none" d="M16 16 L36 36 M36 16 L16 36" />
+      </svg>`
+    : `
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16" />
+      </svg>`;
+
+  toast.innerHTML = `
+    <div class="checkmark-wrapper">
+      ${iconSVG}
+    </div>
+    <span class="toast-text">${message}</span>
+  `;
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    overlay.classList.add("show");
+    toast.classList.add("show");
+  }, 50);
+
+  setTimeout(() => {
+    overlay.classList.remove("show");
+    toast.classList.remove("show");
+    setTimeout(() => {
+      overlay.remove();
+      toast.remove();
+    }, 400);
+  }, 2800);
+}
+
   async render() {
     return `
       <section class="login-container fullpage">
@@ -35,18 +84,11 @@ export default class Login {
 
   async afterRender() {
     await this._injectContent();
-
-    // Tambahkan class khusus biar layout berubah full screen
     document.body.classList.add("login-active");
 
     const form = document.getElementById('loginForm');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-
-    if (!form || !usernameInput || !passwordInput) {
-      console.error("❌ Elemen login form tidak ditemukan!");
-      return;
-    }
 
     function validateInput(input, message) {
       const errorMsg = input.nextElementSibling;
@@ -67,22 +109,51 @@ export default class Login {
       validateInput(passwordInput, 'Password tidak boleh kosong, harap isi password Anda!')
     );
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
       validateInput(usernameInput, 'Username tidak boleh kosong, harap isi username Anda!');
       validateInput(passwordInput, 'Password tidak boleh kosong, harap isi password Anda!');
 
       const hasError = document.querySelectorAll('.error').length > 0;
-      if (!hasError) {
-        console.log('✅ Form valid! Proses login...');
+      if (hasError) return;
 
-        // Hapus tampilan login full
-        document.body.classList.remove("login-active");
+      this.showToast("Sedang memproses login...");
 
-        // Redirect ke dashboard
-        window.location.hash = "#/dashboard";
+      const loginData = {
+        username: usernameInput.value.trim(),
+        password: passwordInput.value.trim(),
+      };
+
+      try {
+        const response = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(loginData),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+         this.showToast("Username atau password salah!", true);
+
+          return;
+        }
+
+        localStorage.setItem("token", result.token);
+        this.showToast("Login berhasil!");
+
+        setTimeout(() => {
+          document.body.classList.remove("login-active");
+          window.location.hash = "#/dashboard";
+        }, 2000);
+
+      } catch (err) {
+        console.error("❌ Error saat login:", err);
+        this.showToast("Terjadi kesalahan server!");
       }
     });
+
   }
 
   async _injectContent() {
@@ -92,7 +163,6 @@ export default class Login {
   }
 
   unmount() {
-    console.log("✅ Login page unmounted.");
-    document.body.classList.remove("login-active"); // pastikan layout balik normal
+    document.body.classList.remove("login-active");
   }
 }

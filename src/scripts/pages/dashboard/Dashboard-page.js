@@ -1,5 +1,5 @@
 import '../../components/HeaderComponent.js';
-import DashboardPresenter from './dashboard-presenter.js';
+import DashboardPresenter from './Dashboard-presenter.js';
 import initGlobalScrollAnimation from '../../components/scroll-animation.js';
 
 export default class Dashboard {
@@ -130,6 +130,7 @@ export default class Dashboard {
   async afterRender() {
     await this.presenter.injectContent();
     this.presenter.bindNavEvents();
+
 
     // Pastikan Chart.js sudah ada
     if (typeof Chart === "undefined") {

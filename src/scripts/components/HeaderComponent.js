@@ -8,21 +8,30 @@ class HeaderComponent extends HTMLElement {
       document.head.appendChild(link);
     }
 
-this.innerHTML = `
-  <header class="topbar">
-    <h1 id="page-title">Dashboard</h1>
-    <div class="topbar-right">
-      <button class="logout-btn" data-route="/logout">
-        <img src="/logo/logout-red.png" alt="Logout" class="logout-icon" />
-        <span>Logout</span>
-      </button>
-      <img src="/logo/avatar.png" alt="Avatar" class="avatar-icon" />
-    </div>
-  </header>
-`;
-
+    this.innerHTML = `
+      <header class="topbar">
+        <h1 id="page-title">Dashboard</h1>
+        <div class="topbar-right">
+          <button class="logout-btn" data-route="/logout">
+            <img src="/logo/logout-red.png" alt="Logout" class="logout-icon" />
+            <span>Logout</span>
+          </button>
+          <img src="/logo/avatar.png" alt="Avatar" class="avatar-icon" />
+        </div>
+      </header>
+    `;
 
     this._listenToRouteChange();
+    this._initLogout();    // <-- tambah ini
+  }
+
+  _initLogout() {
+    const btn = this.querySelector(".logout-btn");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+      window.location.hash = "/logout";   // sama dengan navbar
+    });
   }
 
   _listenToRouteChange() {

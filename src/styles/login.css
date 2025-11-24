@@ -85,7 +85,7 @@
 
 /* ====== FORM ====== */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem!important;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -119,6 +119,7 @@
 .btn-login {
   width: 100%;
   max-width: 26rem;
+  margin-top: 1.5rem;
   padding: 10px;
   background: #005eff;
   color: white;

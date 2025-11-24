@@ -1,0 +1,502 @@
+/* Container */
+.laporan-container {
+  padding: 1rem;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #213547;
+  font-size: 0.9rem;
+}
+
+.laporan-wrapper {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem 1rem;
+}
+
+/* Header bulan */
+.laporan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.bulan-nav {
+  display: flex;
+  gap: 0.9rem;
+  background: #ffffff;
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.08);
+  width: fit-content;
+}
+
+.btn-bulan {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.3rem 0.35rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #2d3b4a;
+  position: relative;
+  font-size: 0.9rem;
+  transition: 0.25s;
+}
+
+.bulan-icon {
+  width: 1.7rem;
+  height: 1.5rem;
+  opacity: 0.7;
+}
+
+.btn-bulan.active {
+  color: #1e54ff;
+}
+
+/* Garis bawah biru */
+.btn-bulan.active::after {
+  content: "";
+  position: absolute;
+  bottom: -0.35rem;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background: #1e54ff;
+  border-radius: 0.6rem;
+}
+
+/* Hover */
+.btn-bulan:hover {
+  opacity: 0.8;
+}
+
+/* choose month button */
+.btn-choose-month {
+  padding: 0.5rem 0.9rem;
+  border-radius: 1.25rem;
+  border: none;
+  background: #3a5bff;
+  color: #fff;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+
+.btn-choose-month img {
+  width: 1.05rem;
+  height: 1.05rem;
+  object-fit: contain;
+  margin-right: 0.2rem;
+}
+
+/* Judul */
+.juduLaporan {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #53535B;
+  background-color: transparent;
+}
+
+/* Tabel */
+.tabel-wrapper {
+  overflow-x: auto;
+  margin-top: 2rem;
+  border: 0.063rem solid #eef2f8;
+  border-radius: 0.38rem;
+  padding: 1.5rem;
+  max-height: 26rem;
+}
+
+.laporan-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 56.25rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.laporan-table thead th {
+  text-align: left;
+  padding: 0.75rem 0.63rem;
+  font-weight: 700;
+  color: #374151;
+  border-bottom: 0.063rem solid #eef2f8;
+  font-size: 0.9rem;
+}
+
+.laporan-table tbody td {
+  padding: 0.75rem 0.63rem;
+  color: #556b7a;
+  border-bottom: 0.063rem solid #f3f6fa;
+  font-size: 0.9rem;
+}
+
+.laporan-table tbody td:last-child {
+  font-weight: 700;
+}
+
+/* Total keuntungan */
+.laporan-total {
+  margin-top: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg,#1e54ff 0%, #274be6 100%);
+  color: #fff;
+  padding: 0.9rem 1.25rem;
+  border-radius: 0.38rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(38,80,255,0.16);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+
+/* --- Modal Overlay --- */
+.ym-modal.hidden { 
+  display: none; 
+}
+
+.ym-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 58, 250, 0.2);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  padding: 1.25rem;
+}
+
+/* --- Modal Card --- */
+.ym-modal-card {
+  width: 20rem;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.75rem 1.9rem rgba(16,24,40,0.22);
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+/* --- Header --- */
+.ym-modal-header {
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap:0.5rem;
+  padding: 0.9rem 0.75rem;
+  border-bottom: 1px solid #eef2f8;
+  background: #f9fbff;
+}
+
+.ym-year-select {
+  flex: 1;
+  padding: 0.55rem 0.63rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d8e3fa;
+  background: #f8fbff;
+  font-weight: normal;
+  font-size: 0.9rem;
+  color:#1f2b44;
+  transition: 0.2s;
+}
+
+.ym-year-select:focus {
+  border-color: #1e54ff;
+  box-shadow: 0 0 0 2px rgba(30, 84, 255, 0.15);
+}
+
+.ym-close {
+  border: none;
+  background: transparent;
+  font-size: 1.35rem;
+  cursor: pointer;
+  padding: 0.38rem;
+  color:#6b7280;
+  transition: 0.2s;
+}
+
+.seemoreBtn{
+  color:#1e54ff;
+  background-color: transparent;
+  border: none;
+  font-weight: 1000;
+}
+
+.ym-close:hover {
+  color:#111827;
+}
+
+/* --- Months Grid --- */
+.ym-month-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.63rem;
+  padding: 1rem 0.75rem;
+}
+
+.ym-month-btn {
+  padding: 0.63rem;
+  border-radius: 0.5rem;
+  border: 1px solid #eef4ff;
+  background: #f7fbff;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: 0.2s;
+  color:#1f2b44;
+}
+
+.ym-month-btn:hover {
+  background: #edf3ff;
+  border-color: #dbe6ff;
+}
+
+.ym-month-btn.active {
+  background: linear-gradient(90deg,#1e54ff,#274be6);
+  color: #fff;
+  box-shadow: 0 0.38rem 1.13rem rgba(30,84,255,0.2);
+  border-color: transparent;
+}
+
+/* --- Footer --- */
+.ym-footer {
+  padding: 0.75rem;
+  display:flex;
+  justify-content:flex-end;
+  gap:0.5rem;
+  border-top: 1px solid #eef2f8;
+  background:#f9fbff;
+}
+
+/* Tombol Batal */
+.ym-ghost {
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  font-weight: normal;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.5rem;
+  transition: 0.2s;
+}
+
+.ym-ghost:hover {
+  background:#eef2f8;
+}
+
+/* Tombol Selesai – Primary Button */
+.ym-primary {
+  background: linear-gradient(90deg,#1e54ff,#274be6);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  font-weight: normal;
+  font-size: 0.9rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0 4px 12px rgba(30, 84, 255, 0.25);
+}
+
+.ym-primary:hover {
+  background: linear-gradient(90deg,#234cff,#1c4bdd);
+  box-shadow: 0 5px 14px rgba(30, 84, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+
+/* Table header line */
+.laporan-table thead tr {
+  border-bottom: 0.13rem solid #3b5cff !important;
+}
+
+.laporan-table th {
+  padding-bottom: 0.5rem;
+  font-weight: normal !important;
+  color: #444;
+}
+
+/* --- Search by ID Laporan Keuangan --- */
+.search-id-wrapper {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 18rem;
+}
+
+.search-id-input {
+  width: 100%;
+  padding: 0.6rem 2.3rem 0.6rem 0.9rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 3rem;
+  font-size: 0.9rem;
+  background: #f9fbff;
+  transition: 0.25s;
+}
+
+.search-id-input:focus {
+  border-color: #1e54ff;
+  box-shadow: 0 0 0 2px rgba(30, 84, 255, 0.2);
+  outline: none;
+}
+
+.search-id-icon {
+  width: 1.1rem;
+  position: absolute;
+  right: 0.7rem;
+  opacity: 0.7;
+}
+
+/* === DETAIL MODAL === */
+#detailModal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 58, 250, 0.2);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  padding: 1.25rem;
+}
+#detailModal.hidden {
+  display: none;
+}
+
+.detail-barang {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3125rem 0; /* 5px */
+  font-size: 0.9rem;
+}
+.barang-kategori {
+  color: gray;
+  font-size: 0.9rem;
+}
+
+.detail-total-bersih {
+  text-align: right;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background: #F3F3FF;    
+  color: #1e54ff;            
+  padding: 10px 14px;      
+  margin-top: 14px;
+  width: 100%;         
+  display: block;         
+  box-sizing: border-box;   
+}
+
+
+.detail-card {
+  position: relative;
+  width: 90%;
+  max-width: 26.25rem;  /* 420px */
+  background: white;
+  padding: 1.25rem;     /* 20px */
+  border-radius: 0.875rem; /* 14px */
+  box-shadow: 0 0.625rem 1.875rem rgba(0,0,0,0.2); /* 10px 30px */
+  animation: fadeIn 0.25s ease-out;
+  font-size: 0.9rem;
+  color: #53535B;
+}
+
+/* Tombol close minimalis pojok kanan */
+#detailCloseBtn {
+  position: absolute;
+  top: 0.625rem;    /* 10px */
+  right: 0.625rem;  /* 10px */
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;  /* sesuai permintaan */
+  cursor: pointer;
+  color: #393838;
+  padding: 0.125rem; /* 2px */
+}
+
+#detailCloseBtn:hover {
+  color: black;
+}
+
+.detail-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 8px;      /* jarak antara teks dan garis */
+  margin-bottom: 12px;      /* jarak setelah garis */
+  border-bottom: 1px solid #dcdcdc; /* garis tipis */
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #53535B;
+}
+
+#detailModal hr {
+  border: none;                    /* hilangkan default style */
+  border-bottom: 1px solid #dcdcdc;
+  margin: 12px 0;                  /* jarak atas–bawah biar rapi */
+}
+
+
+
+.icon-detail {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
+}
+
+
+/* Animasi */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(0.625rem); } /* 10px */
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* Animasi */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === BUTTON SEEMORE === */
+.seemoreBtn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #efefef;
+  border: none;
+  cursor: pointer;
+}
+.seemoreBtn:hover {
+  background: #dadada;
+}
+
+
+
+
+/* Responsive */
+@media (max-width: 50rem) {
+  .laporan-wrapper { padding: 0.75rem; }
+  .laporan-table { min-width: 43.75rem; }
+}

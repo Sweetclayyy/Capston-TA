@@ -67,29 +67,37 @@ export default class StokPage {
   <div class="stok-modal-card form-card">
     <span id="closeFormModal" class="close-btn">&times;</span>
     <h2>+ Tambah Stok Baru</h2>
-    <form id="stokForm">
-      <div class="form-group">
-        <label for="namaBarang">Nama Barang</label>
-        <input type="text" id="namaBarang" placeholder="Masukkan nama barang" required>
-      </div>
-      <div class="form-group">
-        <label for="kategoriBarang">Kategori</label>
-        <select id="kategoriBarang" required>
-          <option value="">Pilih Kategori</option>
-          <option value="designer">Designer</option>
-          <option value="kostum">Kostum</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="stokBarang">Jumlah Stok</label>
-        <input type="number" id="stokBarang" min="1" required>
-      </div>
-      <div class="form-group">
-        <label for="hargaBarang">Harga</label>
-        <input type="number" id="hargaBarang" min="0" required>
-      </div>
-      <button type="submit" class="btn-submit">Simpan Stok</button>
-    </form>
+<form id="stokForm">
+  <div class="form-group">
+    <label for="namaBarang">Nama Barang</label>
+    <input type="text" id="namaBarang" placeholder="Masukkan nama barang" required>
+  </div>
+  <div class="form-group">
+    <label for="kategoriBarang">Kategori</label>
+    <select id="kategoriBarang" required>
+      <option value="">Pilih Kategori</option>
+      <option value="designer">Designer</option>
+      <option value="kostum">Kostum</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="stokBarang">Jumlah Stok</label>
+    <input type="number" id="stokBarang" min="1" required>
+  </div>
+  <div class="form-group">
+    <label for="hargaBarang">Harga</label>
+    <input type="number" id="hargaBarang" min="0" required>
+  </div>
+  <div class="form-group">
+    <label for="gambarBarang">Gambar Barang</label>
+    <input type="file" id="gambarBarang" accept="image/*" required>
+    <div id="previewContainer" class="preview-container hidden">
+      <img id="previewImage" alt="Preview Gambar" class="preview-img">
+    </div>
+  </div>
+  <button type="submit" class="btn-submit">Simpan Stok</button>
+</form>
+
   </div>
 </div>
 
@@ -101,6 +109,8 @@ export default class StokPage {
       <span class="page-btn" id="nextPage">&gt;</span>
     </div>
   </div>
+
+  
 </section>
 
     `;

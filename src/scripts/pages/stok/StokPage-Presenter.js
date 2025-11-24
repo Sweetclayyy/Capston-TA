@@ -1,8 +1,10 @@
+import StokModel from "./StokPage-Model.js";
+
 export default class StokPagePresenter {
   constructor(view) {
     this.view = view;
     this.allStock = [];
-    this.itemsPerPage = 8; // 4 kolom × 2 baris
+    this.itemsPerPage = 8;
     this.currentPage = 1;
   }
 
@@ -11,67 +13,53 @@ export default class StokPagePresenter {
     const paginationContainer = document.querySelector(".pagination");
     if (!stokGrid) return;
 
-    // === Dummy data ===
-    this.allStock = [
-      { id: 1, name: "Baju Designer Batik", stock: 2, price: 999999, category: "designer", image: "/images/baju1.jpg" },
-      { id: 2, name: "Baju Kostum Merah", stock: 3, price: 899999, category: "kostum", image: "/images/baju2.jpg" },
-      { id: 3, name: "Baju Designer Songket", stock: 1, price: 1099999, category: "designer", image: "/images/baju3.jpg" },
-      { id: 4, name: "Baju Kostum Kebaya", stock: 4, price: 799999, category: "kostum", image: "/images/baju4.jpg" },
-      { id: 5, name: "Baju Designer Modern", stock: 5, price: 1199999, category: "designer", image: "/images/baju4.jpg" },
-      { id: 6, name: "Baju Kostum Putih", stock: 2, price: 749999, category: "kostum", image: "/images/baju3.jpg" },
-      { id: 7, name: "Baju Designer Elegan", stock: 3, price: 1299999, category: "designer", image: "/images/baju2.jpg" },
-      { id: 8, name: "Baju Kostum Pesta", stock: 6, price: 699999, category: "kostum", image: "/images/baju1.jpg" },
-      { id: 9, name: "Baju Designer Minimalis", stock: 2, price: 999000, category: "designer", image: "/images/baju4.jpg" },
-      { id: 10, name: "Baju Kostum Tradisional", stock: 5, price: 849999, category: "kostum", image: "/images/baju3.jpg" },
-    ];
+    try {
+      this.allStock = await StokModel.getAllStok();
+    } catch (err) {
+      console.error("Gagal ambil stok dari API:", err);
+      this.allStock = [];
+    }
 
-    // === Filter & Search ===
     let filteredStock = this.allStock;
+    if (filter !== "all") filteredStock = filteredStock.filter(item => item.kategori === filter);
+    if (keyword.trim() !== "") filteredStock = filteredStock.filter(item =>
+      item.nama.toLowerCase().includes(keyword.toLowerCase())
+    );
 
-    if (filter !== "all") {
-      filteredStock = filteredStock.filter(item => item.category === filter);
-    }
-
-    if (keyword.trim() !== "") {
-      filteredStock = filteredStock.filter(item =>
-        item.name.toLowerCase().includes(keyword.toLowerCase())
-      );
-    }
-
-    // === Pagination ===
     const totalItems = filteredStock.length;
     const totalPages = Math.ceil(totalItems / this.itemsPerPage);
-
-    // Pastikan currentPage tidak melebihi total
     if (this.currentPage > totalPages) this.currentPage = totalPages || 1;
 
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const paginatedStock = filteredStock.slice(startIndex, startIndex + this.itemsPerPage);
 
-    // === Render Card ===
-    stokGrid.innerHTML = paginatedStock.map(item => `
-      <div class="stok-card">
-        <img src="${item.image}" alt="${item.name}" class="stok-img" />
-        <div class="stok-info">
-          <h3>${item.name}</h3>
-          <p>Stok: ${item.stock}</p>
-          <p class="price">Rp. ${item.price.toLocaleString("id-ID")}</p>
-        </div>
-        <div class="stok-actions-card">
-          <button class="btn-edit" data-id="${item.id}">
-            <img src="/logo/edit.png" alt="Edit Icon" class="icon-btn" />
-            Edit
-          </button>
-          <button class="btn-delete" data-id="${item.id}">Hapus</button>
-        </div>
-      </div>
-    `).join("");
+    stokGrid.innerHTML = paginatedStock.map(item => {
+      const imageUrl = item.gambar.startsWith("http")
+        ? item.gambar
+        : `http://localhost:5000${item.gambar}`;
 
-    // === Render Pagination Dinamis ===
+      return `
+        <div class="stok-card">
+          <img src="${imageUrl}" alt="${item.nama}" class="stok-img" />
+          <div class="stok-info">
+            <h3>${item.nama}</h3>
+            <p>Stok: ${item.stok}</p>
+            <p class="price">Rp. ${parseInt(item.harga).toLocaleString("id-ID")}</p>
+          </div>
+          <div class="stok-actions-card">
+            <button class="btn-edit" data-id="${item.id}">
+              <img src="/logo/edit.png" alt="Edit Icon" class="icon-btn" />
+              Edit
+            </button>
+            <button class="btn-delete" data-id="${item.id}">Hapus</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
     if (paginationContainer) {
-      if (totalPages <= 1) {
-        paginationContainer.style.display = "none"; // sembunyikan jika cuma 1 halaman
-      } else {
+      if (totalPages <= 1) paginationContainer.style.display = "none";
+      else {
         paginationContainer.style.display = "flex";
         paginationContainer.innerHTML = `
           <span class="page-btn" id="prevPage">&lt;</span>
@@ -87,8 +75,7 @@ export default class StokPagePresenter {
     }
 
     this.bindEditDeleteEvents();
-this.bindCardClickEvents();
-
+    this.bindCardClickEvents();
   }
 
   bindPaginationEvents(filter, keyword, totalPages) {
@@ -119,20 +106,78 @@ this.bindCardClickEvents();
   }
 
   bindEditDeleteEvents() {
-    const editButtons = document.querySelectorAll(".btn-edit");
     const deleteButtons = document.querySelectorAll(".btn-delete");
 
-    editButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        alert(`Edit stok ID: ${id} (fitur edit nanti dihubungkan ke form edit)`);
-      });
-    });
+deleteButtons.forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const id = btn.dataset.id;
+    const confirmDelete = await showDeleteConfirm();
+    if (!confirmDelete) return;
 
-    deleteButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/stok/${id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Gagal menghapus stok dari server");
+      const result = await response.json();
+      showToast(result.message || "Stok berhasil dihapus");
+      this.renderStockList();
+    } catch (error) {
+      console.error("Error hapus stok:", error);
+      showToast("Terjadi kesalahan saat menghapus stok");
+    }
+  });
+});
+
+
+    const editButtons = document.querySelectorAll(".btn-edit");
+    const formOverlay = document.querySelector("#stokFormOverlay");
+    const stokForm = document.querySelector("#stokForm");
+    const gambarInput = document.querySelector("#gambarBarang");
+    const previewContainer = document.querySelector("#previewContainer");
+    const previewImage = document.querySelector("#previewImage");
+
+    editButtons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const id = btn.dataset.id;
-        alert(`Hapus stok ID: ${id} (fitur hapus nanti diimplementasi ke API)`);
+        const item = this.allStock.find(stock => stock.id == id);
+        if (!item) return;
+
+        stokForm.reset();
+        formOverlay.classList.remove("hidden");
+        stokForm.dataset.mode = "edit";
+        stokForm.dataset.id = id;
+        stokForm.querySelector("button[type='submit']").textContent = "Update Stok";
+
+        document.querySelector("#namaBarang").value = item.nama;
+        document.querySelector("#kategoriBarang").value = item.kategori;
+        document.querySelector("#stokBarang").value = item.stok;
+        document.querySelector("#hargaBarang").value = item.harga;
+
+        if (item.gambar) {
+          previewImage.src = item.gambar.startsWith("http") 
+            ? item.gambar 
+            : `http://localhost:5000${item.gambar}`;
+          previewContainer.classList.remove("hidden");
+        } else {
+          previewContainer.classList.add("hidden");
+          previewImage.src = "";
+        }
+
+        gambarInput.addEventListener("change", () => {
+          const file = gambarInput.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              previewImage.src = reader.result;
+              previewContainer.classList.remove("hidden");
+            };
+            reader.readAsDataURL(file);
+          } else {
+            previewContainer.classList.add("hidden");
+            previewImage.src = "";
+          }
+        });
       });
     });
   }
@@ -140,13 +185,12 @@ this.bindCardClickEvents();
   handleFilter() {
     const dropdown = document.querySelector("#filterKategori");
     const searchInput = document.querySelector("#searchInput");
-
     if (!dropdown || !searchInput) return;
 
     const updateList = () => {
       const selected = dropdown.value;
       const keyword = searchInput.value;
-      this.currentPage = 1; // reset ke halaman 1 saat filter berubah
+      this.currentPage = 1;
       this.renderStockList(selected, keyword);
     };
 
@@ -154,78 +198,126 @@ this.bindCardClickEvents();
     searchInput.addEventListener("input", updateList);
   }
 
-handleAddStock() {
-  const addBtn = document.querySelector("#addStockBtn");
-  const formOverlay = document.querySelector("#stokFormOverlay");
-  const closeFormModal = document.querySelector("#closeFormModal");
-  const stokForm = document.querySelector("#stokForm");
+  handleAddStock() {
+    const addBtn = document.querySelector("#addStockBtn");
+    const formOverlay = document.querySelector("#stokFormOverlay");
+    const closeFormModal = document.querySelector("#closeFormModal");
+    const stokForm = document.querySelector("#stokForm");
+    const gambarInput = document.querySelector("#gambarBarang");
+    const previewContainer = document.querySelector("#previewContainer");
+    const previewImage = document.querySelector("#previewImage");
 
-  if (!addBtn || !formOverlay || !closeFormModal || !stokForm) return;
+    if (!addBtn || !formOverlay || !closeFormModal || !stokForm) return;
 
-  // ✅ Saat klik tombol "Tambah Stok" → tampilkan overlay
-  addBtn.addEventListener("click", () => {
-    formOverlay.classList.remove("hidden");
-  });
+    gambarInput.addEventListener("change", () => {
+      const file = gambarInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          previewImage.src = reader.result;
+          previewContainer.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewContainer.classList.add("hidden");
+        previewImage.src = "";
+      }
+    });
 
-  // ✅ Tutup modal saat klik tanda × atau klik luar
-  closeFormModal.addEventListener("click", () => {
-    formOverlay.classList.add("hidden");
-  });
-  formOverlay.addEventListener("click", (e) => {
-    if (e.target === formOverlay) formOverlay.classList.add("hidden");
-  });
+    addBtn.addEventListener("click", () => {
+      stokForm.reset();
+      previewContainer.classList.add("hidden");
+      formOverlay.classList.remove("hidden");
+      stokForm.dataset.mode = "add";
+      delete stokForm.dataset.id;
+      stokForm.querySelector("button[type='submit']").textContent = "Tambah Stok";
+    });
 
-  // ✅ Tangani submit form
-  stokForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const nama = document.querySelector("#namaBarang").value;
-    const kategori = document.querySelector("#kategoriBarang").value;
-    const stok = parseInt(document.querySelector("#stokBarang").value);
-    const harga = parseInt(document.querySelector("#hargaBarang").value);
+    closeFormModal.addEventListener("click", () => formOverlay.classList.add("hidden"));
+    formOverlay.addEventListener("click", (e) => {
+      if (e.target === formOverlay) formOverlay.classList.add("hidden");
+    });
 
-    showToast(`Berhasil menambahkan stok: ${nama}`);
+    stokForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
+      const nama = document.querySelector("#namaBarang").value;
+      const kategori = document.querySelector("#kategoriBarang").value;
+      const stok = parseInt(document.querySelector("#stokBarang").value);
+      const harga = parseInt(document.querySelector("#hargaBarang").value);
+      const gambarFile = gambarInput.files[0];
+      const mode = stokForm.dataset.mode;
+      const id = stokForm.dataset.id;
 
-    formOverlay.classList.add("hidden");
-    stokForm.reset();
-  });
-}
+      let result = null;
 
+      if (mode === "edit") {
+        const formData = new FormData();
+        formData.append("nama", nama);
+        formData.append("kategori", kategori);
+        formData.append("stok", stok);
+        formData.append("harga", harga);
+        if (gambarFile) formData.append("gambar", gambarFile);
+
+        try {
+          const response = await fetch(`http://localhost:5000/api/stok/${id}`, {
+            method: "PUT",
+            body: formData,
+          });
+
+          if (!response.ok) throw new Error("Gagal update stok");
+          const data = await response.json();
+          showToast(data.message || "Berhasil update stok");
+
+          formOverlay.classList.add("hidden");
+          stokForm.reset();
+          this.renderStockList();
+        } catch (err) {
+          console.error(err);
+          showToast("Gagal memperbarui stok");
+        }
+      } else {
+        result = await StokModel.addStok({ nama, kategori, stok, harga, gambarFile });
+        if (result) {
+          showToast(`Berhasil menambahkan stok: ${nama}`);
+          formOverlay.classList.add("hidden");
+          stokForm.reset();
+          previewContainer.classList.add("hidden");
+          this.renderStockList();
+        } else showToast("Gagal menambahkan stok, coba lagi.");
+      }
+    });
+  }
 
   bindCardClickEvents() {
-  const cards = document.querySelectorAll(".stok-card");
-  const modal = document.querySelector("#stokModal");
-  const closeModal = document.querySelector("#closeModal");
+    const cards = document.querySelectorAll(".stok-card");
+    const modal = document.querySelector("#stokModal");
+    const closeModal = document.querySelector("#closeModal");
 
-  if (!modal || !closeModal) return;
+    if (!modal || !closeModal) return;
 
-  cards.forEach(card => {
-    card.addEventListener("click", () => {
-      const id = card.querySelector(".btn-edit")?.dataset.id;
-      const item = this.allStock.find(stock => stock.id == id);
-      if (!item) return;
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        const id = card.querySelector(".btn-edit")?.dataset.id;
+        const item = this.allStock.find(stock => stock.id == id);
+        if (!item) return;
 
-      // isi data ke modal
-      document.querySelector("#modalImage").src = item.image;
-      document.querySelector("#modalName").textContent = item.name;
-      document.querySelector("#modalStock").textContent = `Stok: ${item.stock}`;
-      document.querySelector("#modalPrice").textContent = `Harga: Rp ${item.price.toLocaleString("id-ID")}`;
+        const imageUrl = item.gambar.startsWith("http")
+          ? item.gambar
+          : `http://localhost:5000${item.gambar}`;
 
-      modal.classList.remove("hidden");
+        document.querySelector("#modalImage").src = imageUrl;
+        document.querySelector("#modalName").textContent = item.nama;
+        document.querySelector("#modalStock").textContent = `Stok: ${item.stok}`;
+        document.querySelector("#modalPrice").textContent = `Harga: Rp ${parseInt(item.harga).toLocaleString("id-ID")}`;
+
+        modal.classList.remove("hidden");
+      });
     });
-  });
 
-  closeModal.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.classList.add("hidden");
-    }
-  });
-}
-
+    closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+  }
 }
 
 function showToast(message) {
@@ -255,7 +347,6 @@ function showToast(message) {
     toast.classList.add("show");
   }, 100);
 
-  // Hilang otomatis setelah 3 detik
   setTimeout(() => {
     overlay.classList.remove("show");
     toast.classList.remove("show");
@@ -264,5 +355,46 @@ function showToast(message) {
       toast.remove();
     }, 400);
   }, 3000);
+}
+
+function showDeleteConfirm(message = "Yakin ingin menghapus stok ini?") {
+  return new Promise((resolve) => {
+    // Buat overlay
+    const overlay = document.createElement("div");
+    overlay.className = "confirm-overlay";
+
+    // Buat modal
+    const modal = document.createElement("div");
+    modal.className = "confirm-modal";
+    modal.innerHTML = `
+      <p>${message}</p>
+      <div class="confirm-buttons">
+        <button class="btn-cancel">Batal</button>
+        <button class="btn-confirm">Hapus</button>
+      </div>
+    `;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Event tombol
+    modal.querySelector(".btn-cancel").addEventListener("click", () => {
+      overlay.remove();
+      resolve(false);
+    });
+
+    modal.querySelector(".btn-confirm").addEventListener("click", () => {
+      overlay.remove();
+      resolve(true);
+    });
+
+    // Klik di luar modal = batal
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.remove();
+        resolve(false);
+      }
+    });
+  });
 }
 

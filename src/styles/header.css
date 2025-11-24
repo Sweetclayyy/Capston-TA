@@ -75,6 +75,58 @@
   transform: scale(1.05); /* efek hover ringan */
 }
 
+.toast-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.toast-overlay.show {
+  background: rgba(0,0,0,0.15);
+  opacity: 1;
+}
+
+.toast {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: #fff;
+  padding: 20px 28px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: all .35s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.checkmark-wrapper {
+  width: 40px;
+  height: 40px;
+}
+
+.checkmark-circle {
+  stroke: #28a745;
+  stroke-width: 4;
+}
+
+.checkmark-check {
+  stroke: #28a745;
+  stroke-width: 4;
+}
+
+
 
 @media (max-width: 769px) {
   .topbar {
