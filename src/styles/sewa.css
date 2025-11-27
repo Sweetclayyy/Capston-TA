@@ -1,25 +1,38 @@
 .sewa-container {
-  padding: 20px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9fafb; /* background halaman */
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  background-color: none;
+  font-size: 0.9rem; /* default font size */
+}
+
+.header-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .header-section {
-  display: flex;
+  display: block;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
-.btn-tambah {
+
+
+#tambahSewaBtn{
+  width:100%;
   background: none;
-  border: 1px solid #3b82f6;
+  display: block;
+  border: 0.1rem solid #3b82f6;
   color: #3b82f6;
   font-weight: 500;
-  border-radius: 8px;
-  padding: 8px 14px;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 0.9rem;
+  padding: 0.8rem 0.8rem;
+
 }
 
 .btn-tambah:hover {
@@ -32,17 +45,19 @@
   border-radius: 2rem 2rem 0 0;
   overflow: hidden;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05); /* 2px 4px */
 }
 
 .tab-btn {
   flex: 1;
-  padding: 12px 0;
+  padding: 0.75rem 0; /* 12px 0 */
   border: none;
-  background-color: #f3f4f6;
+  background-color: #f4f6f3;
   cursor: pointer;
   font-weight: 500;
   transition: 0.3s;
+  color: #1E3AFA;
+  font-size: 0.9rem;
 }
 
 .tab-btn.active {
@@ -52,33 +67,34 @@
 
 .filter-wrap {
   background-color: white;
-  padding: 16px 20px;
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  margin-top: 10px;
+  padding: 1rem 1.25rem; /* 16px 20px */
+  border-radius: 0 0 0.75rem 0.75rem; /* 12px */
+  border: 0.0625rem solid #dcdcdd; /* 1px */
+  margin-top: 0;
 }
 
 .search-box {
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .search-box input {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 0.625rem 0.875rem; /* 10px 14px */
+  border: 0.0625rem solid #d1d5db; /* 1px */
+  border-radius: 0.5rem; /* 8px */
+  font-size: 0.9rem;
 }
+
 
 .search-box .search-icon {
   position: absolute;
-  right: 12px;
+  right: 0.75rem; /* 12px */
   top: 50%;
   transform: translateY(-50%);
   color: #6b7280;
   pointer-events: none;
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
 }
 
 .table-container {
@@ -89,42 +105,177 @@
   width: 100%;
   border-collapse: collapse;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 0.5rem; /* 8px */
   overflow: hidden;
 }
 
 .sewa-table th,
 .sewa-table td {
-  padding: 12px;
+  padding: 0.75rem; /* 12px */
   text-align: center;
-  font-size: 14px;
+  font-size: 0.9rem;
+  color: #374151;
+
 }
 
 .sewa-table th {
   background-color: #f9fafb;
   font-weight: 500;
   color: #374151;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 0.0625rem solid #e5e7eb; /* 1px */
 }
 
 .sewa-table tbody tr {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 0.0625rem solid #e5e7eb; /* 1px */
 }
 
 .status {
-  padding: 5px 12px;
-  border-radius: 20px;
+  padding: 0.3125rem 0.75rem; /* 5px 12px */
+  border-radius: 1.25rem; /* 20px */
   color: white;
-  font-size: 13px;
+  font-size: 0.9rem;
   font-weight: 500;
   display: inline-block;
 }
 
-.status.selesai {
-  background-color: #22c55e;
-}
-
-/* Untuk status "Belum Kembali" (jika perlu nanti) */
 .status.belum {
   background-color: #ef4444;
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding:0.4rem 1rem;
 }
+
+
+.status.selesai {
+  background-color: #22c55e !important; /* hijau */
+  color: white;
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+}
+
+
+.btn-kelola {
+  background-color: #fff820;
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-kelola:hover {
+  background-color: #f7e600; /* lebih gelap sedikit saat hover */
+  transform: scale(1.05);     /* sedikit membesar saat hover */
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    background-color: rgba(30, 58, 250, 0.2);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+
+.overlay.hidden {
+  display: none;
+}
+
+/* Card content */
+.overlay-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Form */
+#kelolaForm .form-group {
+  margin-bottom: 1rem;
+}
+
+#kelolaForm label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+#kelolaForm input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#kelolaForm input:read-only {
+  background-color: #edf4fe;
+  cursor: not-allowed;
+}
+
+/* Buttons */
+#kelolaForm .btn {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#kelolaForm .btn-primary {
+  background-color: #1E3AFA; /* biru modern */
+  color: #fff;
+  border: none;
+}
+
+#kelolaForm .btn-primary:hover {
+  background-color: #2563eb;
+}
+
+#kelolaForm .btn-link {
+  background: none;
+  border: none;
+  color: #6b7280; /* abu-abu */
+  text-decoration: underline;
+}
+
+#kelolaForm .btn-link:hover {
+  color: #374151;
+}
+
+/* Animasi masuk overlay */
+@keyframes fadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+

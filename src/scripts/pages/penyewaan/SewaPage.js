@@ -1,44 +1,8 @@
-// src/pages/penyewaan/SewaPage.js
+import SewaPagePresenter from "./SewaPage-Presenter.js";
 
 export default class SewaPage {
   constructor() {
-    this.dataSewa = [
-      {
-        id: 1,
-        namaBarang: "Set Kebaya 1",
-        jumlah: 1,
-        namaPenyewa: "Citra Oktafiana",
-        tanggal: "17/07/2025",
-        status: "Belum Kembali",
-      },
-      {
-        id: 2,
-        namaBarang: "Set Kebaya 4",
-        jumlah: 1,
-        namaPenyewa: "Siti Aminah",
-        tanggal: "15/07/2025",
-        status: "Belum Kembali",
-      },
-      {
-        id: 3,
-        namaBarang: "Set Kebaya 1",
-        jumlah: 1,
-        namaPenyewa: "Citra Oktafiana",
-        tanggal: "20/07/2025",
-        status: "Selesai",
-      },
-      {
-        id: 4,
-        namaBarang: "Set Kebaya 4",
-        jumlah: 1,
-        namaPenyewa: "Siti Aminah",
-        tanggal: "18/07/2025",
-        status: "Selesai",
-      },
-    ];
-
-    this.activeTab = "disewa";
-    this.navClickHandlers = [];
+    this.presenter = new SewaPagePresenter(this);
   }
 
   async render() {
@@ -57,9 +21,11 @@ export default class SewaPage {
 
           <div class="filter-wrap">
             <div class="search-box">
-              <input type="text" id="searchInput" placeholder="Search word..." />
-              <span class="search-icon">🔍</span>
-            </div>
+  <input type="text" id="searchInput" class="search-id-input" placeholder="Search word..." />
+  <img src="/logo/search.png" alt="Search" class="search-icon" />
+</div>
+
+
 
             <div class="table-container">
               <table class="sewa-table">
@@ -78,96 +44,56 @@ export default class SewaPage {
             </div>
           </div>
         </div>
+        <div id="kelolaOverlay" class="overlay hidden">
+  <div class="overlay-content">
+    <h3>Kelola Transaksi</h3>
+    <form id="kelolaForm">
+      <div class="form-group">
+        <label>Nama Penyewa</label>
+        <input type="text" id="namaPenyewa" readonly />
+      </div>
+      <div class="form-group">
+        <label>Nama Barang & Jumlah</label>
+        <input type="text" id="namaBarangJumlah" readonly />
+      </div>
+      <div class="form-group">
+        <label>Tanggal Kembali</label>
+        <input type="date" id="tanggalKembali" readonly />
+      </div>
+      <div class="form-group">
+        <label>Tanggal Kembali Sebenarnya</label>
+        <input type="date" id="tanggalKembaliSebenarnya" required />
+      </div>
+      <div class="form-group">
+        <label>Denda Keterlambatan (Rp)</label>
+        <input type="number" id="dendaKeterlambatan" readonly value="0" />
+      </div>
+      <div class="form-group">
+        <label>Denda Lain-lain (Rp)</label>
+        <input type="number" id="dendaLain" value="0" />
+      </div>
+      <button type="submit" class="btn btn-primary">Simpan</button>
+      <button type="button" id="closeOverlay" class="btn btn-link">Tutup</button>
+    </form>
+  </div>
+</div>
+
       </section>
     `;
   }
 
   async afterRender() {
-    await this._injectContent();
-    this._bindEvents();
-    this._renderTable();
+    await this._injectContent(); // pastikan DOM sudah ada
+    this.presenter.afterRender();
   }
 
   unmount() {
-    this.navClickHandlers.forEach(({ element, callback }) =>
-      element.removeEventListener("click", callback)
-    );
-    this.navClickHandlers = [];
-    console.log("✅ SewaPage unmounted: listeners cleaned up.");
+    this.presenter.unmount();
   }
 
   async _injectContent() {
     const container = document.querySelector("#main-content");
     if (!container) return console.error("❌ #main-content tidak ditemukan!");
     container.innerHTML = await this.render();
-  }
-
-  _bindEvents() {
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const searchInput = document.getElementById("searchInput");
-    const tambahBtn = document.getElementById("tambahSewaBtn");
-
-    // Tab switching
-    tabButtons.forEach((btn) => {
-      const handler = () => {
-        tabButtons.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        this.activeTab = btn.dataset.tab;
-        this._renderTable();
-      };
-      btn.addEventListener("click", handler);
-      this.navClickHandlers.push({ element: btn, callback: handler });
-    });
-
-    // Search
-    const searchHandler = () => this._renderTable();
-    searchInput.addEventListener("input", searchHandler);
-    this.navClickHandlers.push({ element: searchInput, callback: searchHandler });
-
-    // Tambah sewa
-    const tambahHandler = () => {
-      window.location.hash = "#/sewaForm";
-    };
-    tambahBtn.addEventListener("click", tambahHandler);
-    this.navClickHandlers.push({ element: tambahBtn, callback: tambahHandler });
-  }
-
-  _renderTable() {
-    const tableBody = document.getElementById("tableBody");
-    if (!tableBody) return;
-
-    const keyword = document.getElementById("searchInput")?.value.toLowerCase() || "";
-
-    const filtered = this.dataSewa.filter((item) => {
-      const matchTab =
-        this.activeTab === "disewa"
-          ? item.status === "Belum Kembali"
-          : item.status === "Selesai";
-
-      const matchSearch =
-        item.namaBarang.toLowerCase().includes(keyword) ||
-        item.namaPenyewa.toLowerCase().includes(keyword);
-
-      return matchTab && matchSearch;
-    });
-
-    tableBody.innerHTML = filtered
-      .map(
-        (item, index) => `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${item.namaBarang}</td>
-            <td>${item.jumlah}</td>
-            <td>${item.namaPenyewa}</td>
-            <td>${item.tanggal}</td>
-            <td>
-              <span class="status ${
-                item.status === "Selesai" ? "selesai" : "belum"
-              }">${item.status}</span>
-            </td>
-          </tr>
-        `
-      )
-      .join("");
   }
 }

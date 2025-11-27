@@ -2,7 +2,8 @@
 export default class LaporanKeuanganPresenter {
   constructor(page) {
     this.page = page;
-    this.apiMode = false;
+    this.apiMode = true;
+
     this.currentMonth = this._getCurrentYYYYMM();
     this.navListeners = [];
     this.yearRange = { start: new Date().getFullYear() - 5, end: new Date().getFullYear() + 2 };
@@ -208,68 +209,37 @@ export default class LaporanKeuanganPresenter {
     document.getElementById("yearMonthModal")?.classList.add("hidden");
   }
 
-  // === FETCH DATA ===
   async _fetchData(month) {
-    if (this.apiMode) {
-      try {
-        const res = await fetch(`/laporan?month=${month}`);
-        return await res.json();
-      } catch (err) {
-        console.error(err);
-        alert("Gagal memuat data server, menggunakan mock.");
-        return this._mockData(month);
-      }
+    try {
+      const res = await fetch(`http://localhost:5000/api/laporan?month=${month}`);
+      const json = await res.json();
+
+      // Normalisasi data supaya cocok dengan renderer
+      return json.map(item => ({
+        id: item.id,
+        tgl_sewa: item.tgl_sewa,
+        tgl_kembali: item.tgl_kembali,
+        penyewa: item.penyewa,
+        include_model: item.barang?.[0]?.include_model || 0,
+        denda_telat: item.denda_keterlambatan || 0,
+        denda_lain: item.denda_lain || 0,
+        total_harga: item.total_harga || 0,
+        total: (item.total_harga || 0) + (item.denda_keterlambatan || 0) + (item.denda_lain || 0),
+        keuntungan_model: item.keuntungan_model || 0,
+        keuntungan_designer: item.keuntungan_designer || 0,
+        barang: item.barang?.map(b => ({
+          nama: b.namaBarang,
+          kategori: b.kategori,
+          harga: b.harga_barang,
+          qty: b.jumlah
+        })) || [],
+        customer: { nama: item.customer?.nama, telp: item.customer?.telp }
+      }));
+    } catch (err) {
+      console.error(err);
+      alert("Gagal memuat data server.");
+      return [];
     }
-    return this._mockData(month);
-  }
-
-  _mockData() {
-    return [
-      {
-        id: "TRX001",
-        tgl_sewa: "2025-01-05",
-        tgl_kembali: "2025-01-07",
-
-        penyewa: "Dina Pratama",
-        include_model: 1,
-        denda_telat: 20000,
-        denda_lain: 0,
-
-        total: 370000,
-        total_harga: 350000,
-        keuntungan_model: 150000,
-        keuntungan_designer: 50000,
-
-        barang: [
-          { nama: "Gaun Silver Premium", kategori: "kostum", harga: 250000, qty: 1 },
-          { nama: "Headpiece Bridal", kategori: "designer", harga: 100000, qty: 1 }
-        ],
-
-        customer: { nama: "Dina Pratama", telp: "0812-9988-1122" }
-      },
-
-      {
-        id: "TRX002",
-        tgl_sewa: "2025-01-08",
-        tgl_kembali: "2025-01-09",
-
-        penyewa: "Vina Kusuma",
-        include_model: 0,
-        denda_telat: 0,
-        denda_lain: 15000,
-
-        total: 215000,
-        total_harga: 200000,
-        keuntungan_model: 0,
-        keuntungan_designer: 100000,
-
-        barang: [
-          { nama: "Dress Casual Korea", kategori: "kostum", harga: 200000, qty: 1 }
-        ],
-
-        customer: { nama: "Vina Kusuma", telp: "0896-5566-2211" }
-      }
-    ];
   }
 
   _renderTable(data) {
@@ -283,14 +253,18 @@ export default class LaporanKeuanganPresenter {
     data.forEach(row => {
       const km = row.keuntungan_model || 0;
       const kd = row.keuntungan_designer || 0;
-      const bersih = km + kd;
+      const dendaTelat = row.denda_telat || 0;
+
+// Keuntungan bersih = total_harga - keuntungan_designer + denda keterlambatan
+const bersih = (row.total_harga || 0) - kd + dendaTelat;
       total += bersih;
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${row.id}</td>
-        <td>${row.tgl_sewa}</td>
-        <td>${row.tgl_kembali}</td>
+        <td>${this._formatTanggal(row.tgl_sewa)}</td>
+<td>${this._formatTanggal(row.tgl_kembali)}</td>
+
         <td>${this._formatRupiah(row.total_harga)}</td>
         <td>${this._formatRupiah(km)}</td>
         <td>${kd ? this._formatRupiah(kd) : "-"}</td>
@@ -342,8 +316,9 @@ export default class LaporanKeuanganPresenter {
 
       <hr>
 
-      <p><strong>Tanggal Sewa:</strong> ${data.tgl_sewa}</p>
-      <p><strong>Tanggal Kembali:</strong> ${data.tgl_kembali}</p>
+      <p><strong>Tanggal Sewa:</strong> ${this._formatTanggal(data.tgl_sewa)}</p>
+<p><strong>Tanggal Kembali:</strong> ${this._formatTanggal(data.tgl_kembali)}</p>
+
 
       <hr>
 
@@ -358,9 +333,12 @@ export default class LaporanKeuanganPresenter {
       <p><strong>Keuntungan Model:</strong> ${this._formatRupiah(data.keuntungan_model)}</p>
       <p><strong>Keuntungan Designer:</strong> ${this._formatRupiah(data.keuntungan_designer)}</p>
 
-      <p class="detail-total-bersih">
-        Total Bersih: ${this._formatRupiah(data.keuntungan_model + data.keuntungan_designer)}
-      </p>
+    <p class="detail-total-bersih">
+  Total Bersih: ${this._formatRupiah(
+    (data.total_harga || 0) - (data.keuntungan_designer || 0) + (data.denda_telat || 0)
+  )}
+</p>
+
     `;
 
     modal.classList.remove("hidden");
@@ -378,6 +356,16 @@ export default class LaporanKeuanganPresenter {
       ][parseInt(m) - 1]} ${y}`;
   }
 
+  _formatTanggal(str) {
+  if (!str) return "-";
+  const d = new Date(str);
+  if (isNaN(d)) return str;
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
   destroy() {
     this.navListeners.forEach(({ element, cb }) => {
       element.removeEventListener("click", cb);
@@ -386,6 +374,9 @@ export default class LaporanKeuanganPresenter {
     this.navListeners = [];
   }
 }
+
+
+
 
 document.addEventListener("click", e => {
   if (e.target.id === "detailCloseBtn") {

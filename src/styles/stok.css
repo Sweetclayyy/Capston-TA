@@ -54,11 +54,12 @@
 }
 
 .btn-tambah {
-  color: #fff;
-  border: none;
+   border: 0.1rem solid #3b82f6;
+  color: #3b82f6;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  background-color: white;
 }
 
 .filter-dropdown {

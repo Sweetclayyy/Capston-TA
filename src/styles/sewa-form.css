@@ -5,14 +5,14 @@
   --error: #ef4444;
   --success: #22c55e;
   --border: #e5e7eb;
-  --bg-light: #f3f4f6;
+  --bg-light: transparent;
   --bg-card: #ffffff;
-  --text-dark: #1f2937;
+  --text-dark: #374151;
   --text-gray: #6b7280;
   --text-light: #9ca3af;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-  --radius: 12px;
+  --shadow: 0 0.063rem 0.188rem rgba(0, 0, 0, 0.1); /* 1px 3px */
+  --shadow-lg: 0 0.625rem 1.563rem rgba(0, 0, 0, 0.1); /* 10px 25px */
+  --radius: 0.75rem; /* 12px */
   --transition: all 0.3s ease;
 }
 
@@ -34,7 +34,7 @@
 
 .sewa-form-wrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 37.5rem; /* 600px */
 }
 
 .form-card {
@@ -46,7 +46,7 @@
 
 .form-title {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* default 0.9rem */
   font-weight: 600;
   color: var(--text-dark);
   margin-bottom: 2rem;
@@ -71,11 +71,11 @@
 }
 
 .step-number {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem; /* 36px */
+  height: 2.25rem;
   border-radius: 50%;
   background: var(--bg-light);
-  border: 2px solid var(--border);
+  border: 0.125rem solid var(--border); /* 2px */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,10 +98,10 @@
 }
 
 .step-label {
-  font-size: 0.75rem;
+  font-size: 0.75rem; /* tetap lebih kecil */
   color: var(--text-gray);
   text-align: center;
-  max-width: 80px;
+  max-width: 5rem; /* 80px */
 }
 
 .step.active .step-label {
@@ -111,11 +111,11 @@
 
 .progress-line {
   flex: 1;
-  height: 2px;
+  height: 0.125rem; /* 2px */
   background: var(--border);
   margin: 0 0.5rem;
   position: relative;
-  top: -18px;
+  top: -1.125rem; /* -18px */
 }
 
 .progress-line.active {
@@ -135,7 +135,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(0.625rem); /* 10px */
   }
   to {
     opacity: 1;
@@ -150,7 +150,7 @@
 
 .form-group label {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-dark);
   margin-bottom: 0.5rem;
@@ -160,9 +160,9 @@
 .form-group select {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border: 0.0625rem solid var(--border); /* 1px */
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   color: var(--text-dark);
   transition: var(--transition);
   background: white;
@@ -172,7 +172,7 @@
 .form-group select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+  box-shadow: 0 0 0 0.1875rem rgba(67, 97, 238, 0.1); /* 3px */
 }
 
 .form-group input.error {
@@ -186,7 +186,7 @@
 .error-message {
   display: none;
   color: var(--error);
-  font-size: 0.75rem;
+  font-size: 0.75rem; /* tetap lebih kecil */
   margin-top: 0.25rem;
 }
 
@@ -196,13 +196,15 @@
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 1rem;
+  color:#374151;
 }
 
 .barang-item {
   background: var(--bg-light);
   padding: 1.25rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  border: 0.0625rem solid var(--border);
+  color:#374151;
 }
 
 .barang-header {
@@ -210,12 +212,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
+    color:#374151;
 }
 
 .barang-header label {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-dark);
+    color:#374151;
 }
 
 .btn-remove {
@@ -225,12 +229,12 @@
   font-size: 1.25rem;
   cursor: pointer;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   transition: var(--transition);
 }
 
@@ -241,9 +245,9 @@
 .barang-select {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border: 0.0625rem solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   margin-bottom: 1rem;
   background: white;
   cursor: pointer;
@@ -261,7 +265,7 @@
 
 .quantity-group label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.75rem; /* tetap kecil */
   font-weight: 500;
   color: var(--text-gray);
   margin-bottom: 0.5rem;
@@ -272,18 +276,18 @@
   align-items: center;
   gap: 0.5rem;
   background: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 0.0625rem solid var(--border);
+  border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
 }
 
 .qty-btn {
-  background: var(--primary);
+  background: white;
   border: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  color: rgb(136, 136, 136);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.875rem;
   display: flex;
@@ -295,7 +299,7 @@
 }
 
 .qty-btn:hover {
-  background: var(--primary-hover);
+  background:#d8d8d8;;
 }
 
 .qty-btn:active {
@@ -303,11 +307,11 @@
 }
 
 .qty-display {
-  min-width: 32px;
+  min-width: 2rem;
   text-align: center;
   font-weight: 600;
   color: var(--text-dark);
-  font-size: 0.875rem;
+  font-size: 0.75rem; /* tetap kecil */
 }
 
 .model-group {
@@ -319,14 +323,14 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--text-gray);
   user-select: none;
 }
 
 .checkbox-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
   cursor: pointer;
   accent-color: var(--primary);
 }
@@ -336,8 +340,8 @@
   width: 100%;
   padding: 0.75rem;
   background: white;
-  border: 2px dashed var(--border);
-  border-radius: 8px;
+  border: 0.125rem dashed var(--border); /* 2px */
+  border-radius: 0.5rem;
   color: var(--primary);
   font-weight: 500;
   cursor: pointer;
@@ -369,7 +373,7 @@
 
 .date-input label {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-dark);
   margin-bottom: 0.5rem;
@@ -378,9 +382,9 @@
 .date-input input[type="date"] {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border: 0.0625rem solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   color: var(--text-dark);
   background: white;
   cursor: pointer;
@@ -390,7 +394,7 @@
 .date-input input[type="date"]:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+  box-shadow: 0 0 0 0.1875rem rgba(67, 97, 238, 0.1);
 }
 
 /* === Navigation Buttons === */
@@ -405,8 +409,8 @@
 .btn {
   padding: 0.75rem 2rem;
   border: none;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
@@ -420,8 +424,8 @@
 
 .btn-primary:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+  transform: translateY(-0.125rem); /* 2px */
+  box-shadow: 0 0.25rem 0.75rem rgba(67, 97, 238, 0.3);
 }
 
 .btn-primary:active {
@@ -451,17 +455,45 @@
   background: var(--primary);
   color: white;
   padding: 0.875rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .submit-btn:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(67, 97, 238, 0.3);
 }
 
+/* === Icons === */
+.icon-calendar {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.form-header {
+  display: flex;        
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;         
+  margin-bottom: 2rem;
+}
+
+.icon-form {
+  width: 2rem;   /* sesuaikan ukuran */
+}
+
+.form-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;      /* hilangkan margin default */
+}
+
+
 /* === Responsive === */
-@media (max-width: 640px) {
+@media (max-width: 40rem) { /* 640px */
   .container {
     padding: 1rem;
   }
@@ -476,12 +508,12 @@
 
   .step-label {
     font-size: 0.65rem;
-    max-width: 60px;
+    max-width: 3.75rem; /* 60px */
   }
 
   .step-number {
-    width: 32px;
-    height: 32px;
+    width: 2rem; /* 32px */
+    height: 2rem;
     font-size: 0.875rem;
   }
 
